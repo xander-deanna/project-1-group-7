@@ -14,13 +14,18 @@ I WANT to see information relating to finances that I choose
 SO THAT I am able to make better financial decisions and have to put in less work to find the information  
 
 ## Wireframe
-![Flow Image](./Assets/Wireframe.png)
+![Flow Image](./Assets/Wireframe.png=500x)
 
 ## User Flow
-![Flow Image](./Assets/flow.png)
+![Flow Image](./Assets/flow.png=500x)
+
 
 ## Tasks
 
-
-
-
+1. Design flow / logic
+2. Design / build page layout
+3. Implement dynamic elements + testing
+4. Implement user interactions + testing
+5. Polish UI
+6. Final testing
+7. Deploy 🚀
