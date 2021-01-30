@@ -14,11 +14,13 @@ I WANT to see information relating to finances that I choose
 SO THAT I am able to make better financial decisions and have to put in less work to find the information  
 
 ## Wireframe
-![Wireframe Image](url)
+![Flow Image](./Assets/Wireframe.png)
 
 ## User Flow
 ![Flow Image](./Assets/flow.png)
 
 ## Tasks
+
+
 
 
