@@ -17,6 +17,8 @@ SO THAT I am able to make better financial decisions and have to put in less wor
 ![Wireframe Image](url)
 
 ## User Flow
-![Flow Diagram](url)
+![Flow Diagram](../Assets/flow.png)
+
+## Tasks
 
 
