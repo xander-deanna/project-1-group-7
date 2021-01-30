@@ -7,16 +7,18 @@ We will also allow users to search current stock and cryptocurrency prices using
 
 
 ## User Story
-AS A person with a computer and an internet connection
-I WANT to see news information relating to the local area where I live
-SO THAT I am more informed about events that may directly affect me
-I WANT to see information relating to finances that I choose
-SO THAT I am able to make better financial decisions and have to put in less work to find the information
+AS A person with a computer and an internet connection  
+I WANT to see news information relating to the local area where I live  
+SO THAT I am more informed about events that may directly affect me  
+I WANT to see information relating to finances that I choose  
+SO THAT I am able to make better financial decisions and have to put in less work to find the information  
 
 ## Wireframe
 ![Wireframe Image](url)
 
 ## User Flow
-![Flow Diagram](url)
+![Flow Image](./Assets/flow.png)
+
+## Tasks
 
 
