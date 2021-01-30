@@ -7,6 +7,10 @@ We will also allow users to search current stock and cryptocurrency prices using
 
 
 
+### User Story
+I am a user interested in seeing news headlines from my local area and financial information
+
+
 
 
 
