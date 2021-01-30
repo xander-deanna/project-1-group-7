@@ -13,6 +13,7 @@ SO THAT I am more informed about events that may directly affect me
 I WANT to see information relating to finances that I choose  
 SO THAT I am able to make better financial decisions and have to put in less work to find the information  
 
+
 ## Wireframe
 ![Flow Image](./Assets/Wireframe.png)
 
