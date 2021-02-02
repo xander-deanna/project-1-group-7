@@ -1,0 +1,112 @@
+/* Resets default font color and style and for page */
+* {
+    color: #ffffff;
+    font-family: 'Mukta', sans-serif;
+}
+h4 {
+    font-family: 'Mukta', sans-serif;
+}
+
+/* Changes font for the logo */
+.logo {
+    color: #fafafa;
+    background-color: #00000000;
+    font-size: xx-large;
+    font-family: 'Pacifico', cursive;
+}
+.logo:active {
+    color: #fafafa;
+}
+.logo:visited {
+    color: #fafafa;
+}
+.logo:hover {
+    color: #80dbff;
+    font-size: xx-large;
+    font-family: 'Pacifico', cursive;
+}
+/* font awesome icon for logo */
+.fa-newspaper {
+    margin-bottom: 10px;
+}
+
+/* Recolors navbar */
+.top-bar, .top-bar-left .menu {
+    background: #0c0c0c;
+}
+.top-bar {
+    box-shadow: 10px 10px 5px #0000008c;
+    border-bottom: 1px solid #000000;
+}
+
+/* Gives newspaper background */
+body {
+    background:  #000000db url("../images/background.jpg") no-repeat fixed center;
+    background-size: cover;
+}
+
+/* alters attributes for list items (and deletes bullets) */
+ul {
+    margin: 0px 0px 0px 5px;
+    padding: 0px 0px 0px 0px;
+    text-align: left;
+    list-style-type: none;
+
+}
+li {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    list-style-type: none;
+    text-align: left;
+    float: none;
+}
+
+/* Changes color for main content boxes */
+.row {
+    margin: auto;
+    padding: 10px 20px 10px 20px;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+}
+.callout {
+    background-color: #0c0c0c;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #0000008c;
+}
+
+/* Altering buttons and search to give more personal flair */
+.button {
+    color: #0c0c0c;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: #80dbff;
+    margin: 5px 5px 5px 5px;
+    height: 40px;
+}
+.button:hover {
+    font-family: 'Mukta', sans-serif;
+    background-color: #4e3f98;
+}
+.clearBtn {
+    float: right;
+    margin: 5px 5px 5px 5px;
+}
+.search {
+    border: 1px solid #000000;
+    border-radius: 5px;
+    height: 40px;
+    width: 150px;
+    display: inline-flex;
+}
+
+/* Up and down icon for crypto (if we want to use them) */
+/* <i class="fas fa-level-up-alt"></i> on fontawesome */
+.fa-level-up-alt {
+    color: #8bfa7a;
+}
+/* <i class="fas fa-level-down-alt"></i> on fontawesome */
+.fa-level-down-alt {
+    color: #f38066;
+}
