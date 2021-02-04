@@ -20,8 +20,9 @@ function getStock(){
 }
 getStock();
 
+
 var cryptoListEl=document.getElementById("cryptoList");
-// var for Coinbase API incase we need it later
+// var for Coinbase API incase we need it
 var newsAPIKey='67bmTZaUz/0Nsah+bpGJI1MdycNvhwkI9n8Al60/0Cm0m0usl58LHNcstFwFwwGeefj8UjbB299FywcC2zJk/w=='
 
 
@@ -39,3 +40,5 @@ function getCrypto(){
       });
 }
 getCrypto();
+
+
