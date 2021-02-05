@@ -32,13 +32,13 @@ function getCrypto(){
     console.log(requestUrl);
     fetch(requestUrl)
       .then(function (response) {
-        return response.json();
+        response.json();
        })
        
-      .then(function (data) {
-        console.log("Crypto data", data)
+      .then(function (cryptoData) {
+        console.log("Crypto data", cryptoData)
+        return cryptoData;
       });
 }
 getCrypto();
-
 
