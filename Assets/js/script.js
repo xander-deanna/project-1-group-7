@@ -3,25 +3,25 @@ var stocksListEl = document.getElementById("stocksList");
 stockIndex = []
 function getStock() {
 
-  var requestUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=&apikey=U65M3D2LOCIOUFEM'
+  var requestUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=U65M3D2LOCIOUFEM'
 
   console.log(requestUrl);
 
   fetch(requestUrl)
     .then(function (response) {
-      
-    if (response.ok){
-      return response.json()
-      .then(function (data) {
-       if (data["Error Message"]){
-       return $('#errorModal').foundation('open')
-       }
-       console.log(data)
-        })
-        
-  }
-   
-  } )
+
+      if (response.ok) {
+        return response.json()
+          .then(function (data) {
+            if (data["Error Message"]) {
+              return $('#errorModal').foundation('open')
+            }
+            console.log(data)
+          })
+
+      }
+
+    })
 }
 
 
@@ -40,13 +40,18 @@ function getCrypto() {
   console.log(requestUrl);
   fetch(requestUrl)
     .then(function (response) {
-      return response.json();
-    })
+      if (response.ok) {
+        return response.json()
+          .then(function (data) {
+            if (data["Error Message"]) {
+              return $('#errorModal').foundation('open')
+            }
+            console.log(data)
+          })
 
-    .then(function (data) {
-      console.log("Crypto data", data)
-    });
+      }
+})
 }
-getCrypto();
+getCrypto()
 
 
