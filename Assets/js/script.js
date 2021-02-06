@@ -190,22 +190,28 @@ function displayCrypto(cryptoData) {
     renderCryptoLocalStorage(cryptoData); 
 }
 
-
-var favSearch = document.querySelector("#favBtn");
-
-favSearch.addEventListener('click', function(){
+// Crypto favorite search 
+var cryptofavSearch = document.querySelector("#cryptoFavBtn");
+cryptofavSearch.addEventListener('click', function(){
   var favCryptoInput = document.querySelector("#cryptoFav")
-  var favStockInput = document.querySelector("#stockFav")
-  if (favCryptoInput !== null){
-    getCryptoFav()
-  }
-  if (favStockInput !== null){
-    // get fav Stock function
+
+  if (favCryptoInput === null){
+    return $('#errorModal').foundation('open')
   }
 
-  return $('#errorModal').foundation('open')
+  getCryptoFav()
   
+})
+
+// Stock Favorite Search
+stockfavSearch.addEventListener('click', function(){
+  var favStockInput = document.querySelector("#stockFav")
   
+  if (favStockInput === null){
+    return $('#errorModal').foundation('open')
+  }
+  
+  addStockFav()
 })
 
   
