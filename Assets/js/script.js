@@ -1,5 +1,23 @@
 var stocksListEl = document.getElementById("stocksList");
 
+//Variables for search elements
+var stocksSearchBtn = document.getElementById("stocksBtn")
+var cryptoSearchBtn = document.getElementById("cryptoBtn")
+
+//Stocks search event listener for main (index) page
+stocksSearchBtn.addEventListener("click", function(){
+  var stocksListEl = document.querySelector("#stocksList")
+  stocksListEl = ""
+  STKSearchHandler()
+});
+
+//Crypto search event listener for main (index) page
+cryptoSearchBtn.addEventListener("click", function(){
+  var cryptoListEl = document.querySelector("#cryptoList")
+  cryptoListEl = ""
+  cryptoSearchHandler()
+});
+
 stockIndex = []
 function getStock() {
 
