@@ -1,6 +1,15 @@
 
 var renderStockDiv=document.getElementById("render-stock");
 var stocksListEl = document.getElementById("stocksList");
+init()
+
+
+
+
+
+
+
+stockIndex = []
 
 //Variables for search elements
 var stocksSearchBtn = document.getElementById("stocksBtn")
@@ -105,7 +114,6 @@ function getStocks(symbol, i){
 }
 
 
-
 function getStock() {
 
   var requestUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=U65M3D2LOCIOUFEM'
@@ -190,6 +198,25 @@ function displayCrypto(cryptoData) {
     featuredList.appendChild(featuredEl);
 
   }
+}
+
+
+var cryptoFavSearch = document.querySelector("#cryptofav");
+
+cryptoFavSearch.addEventListener('click', function(){
+  var cryptoList = document.querySelector("#cryptoList")
+  var favCryptoLi = document.createElement('li');
+  var favCryptoiEl = document.createElement('i')
+  // favCryptoiEl.setAttribute("id", "favCrypto")
+  favCryptoiEl.className ='far fa-star'
+  favCryptoiEl.textContent = cryptoList.value
+  favCryptoLi.appendChild(favCryptoiEl)
+  cryptoList.appendChild(favCryptoLi)
+})
+
+function init(){
+  return $('#favsModal').foundation('open')
+
 
 
 }
