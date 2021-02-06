@@ -39,10 +39,11 @@ h4 {
     border-bottom: 1px solid #000000;
 }
 
-/* Gives newspaper background */
+/* Gives bitcoin background */
 body {
-    background:  #000000db url("../images/background.jpg") no-repeat fixed center;
-    background-size: cover;
+    background:  #000000db url("../images/background.png") no-repeat fixed center;
+    background-position: center;
+    background-repeat: repeat;
 }
 
 /* alters attributes for list items (and deletes bullets) */
@@ -109,4 +110,10 @@ li {
 /* <i class="fas fa-level-down-alt"></i> on fontawesome */
 .fa-level-down-alt {
     color: #f38066;
+}
+
+.alert{
+color: rgb(3, 11, 82);
+border-color:rgb(241, 6, 6)
+
 }
