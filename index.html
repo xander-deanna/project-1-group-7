@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Newsify</title>
+    <title>Tradify</title>
     <!-- link to foundation css template -->
     <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <!-- google fonts -->
@@ -45,15 +45,34 @@
           </span>
         </div>
         <!-- stocks results list -->
-        <ul id="stocksList">
+        <div class="row">
+          <div class="row">
+            <div class="columns small-2">Symbol</div>
+            <div class="columns small-2">Open</div>
+            <div class="columns small-2">High</div>
+            <div class="columns small-2">low</div>
+            <div class="columns small-2">close</div>
+            <div class="columns small-2">volume</div>
+          </div>
+        </div>
+        <div class="row align-right" id="render-stock">
+          
+
+        </div>
+         
+              
+         
+        <!-- <ul id="stocksList">
           <li>Test li, please delete before working on JS</li>
           <li>Test li, please delete before working on JS</li>
           <li>Test li, please delete before working on JS</li>
           <li>Test li, please delete before working on JS</li>
           <li>Test li, please delete before working on JS</li>
-        </ul>
-        <button id="clearBtnNews" class="clearBtn button" type="button">Clear</button>
-      </div>
+        </ul> -->
+          <div class="row">
+            <button id="clearBtnNews" class="clearBtn button" type="button">Clear</button>
+          </div>
+        </div>
 
       <!-- empty div to maintain space between boxes -->
       <div class= "empty medium-2 columns"></div>
