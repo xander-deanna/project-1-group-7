@@ -291,6 +291,7 @@ function getCryptoFav() {
             }
             console.log("crypto data: ", cryptoData)
             displayCryptoFav(cryptoData)
+
             return cryptoData
           })
 
@@ -310,11 +311,13 @@ function displayCryptoFav(cryptoData) {
   
   var cryptoList = document.querySelector("#favCryptoList")
   var favCryptoLi = document.createElement('li');
-  var favCryptoiEl = document.createElement('i')
+  var favCryptoiEl = document.createElement('i');
   favCryptoiEl.className ='far fa-star'
   favCryptoiEl.textContent = cryptoFavResult
-  favCryptoLi.appendChild(favCryptoiEl)
-  cryptoList.appendChild(favCryptoLi)
+  favCryptoLi.appendChild(favCryptoiEl);
+  cryptoList.appendChild(favCryptoLi);
+
+  saveCrypto(cryptoFavValueCaps);
 }
 
 
