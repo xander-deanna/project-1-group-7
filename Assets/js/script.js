@@ -33,7 +33,7 @@ renderStockList();
 
 
 function renderStockList(){
-  var stocksymbol=["AMZN", "IBM","DIS"]
+  var stocksymbol=["AMZN", "IBM","DIS", "VIAC", "DISCA", "DISCK", "KMX", "GM", "IVZ", "WBA"]
   
   // randomly selects one stock to be displayed
  
@@ -78,7 +78,6 @@ function getStocks(symbol){
         
         var symbolEl=document.createElement("div");
         symbolEl.classList.add("columns");
-        
         symbolEl.classList.add("small-2");
         symbolEl.textContent=symbol;
         
@@ -217,6 +216,54 @@ cryptoFavSearch.addEventListener('click', function(){
   favCryptoLi.appendChild(favCryptoiEl)
   cryptoList.appendChild(favCryptoLi)
 })
+
+function saveStocks(symbolId){
+  var found=false;
+  var stockArray=[];
+  var addStock = {
+      symbol : symbolId,
+              };
+  var stockArray = JSON.parse(localStorage.getItem("stockSymbol") || "[]");
+  
+  console.log(stockArray);
+  // check for duplicate city name
+  for(var i=0; i < stockArray.length; i++){
+    
+    if(stockArray[i].city===symbolId){
+      console.log(stockArray[i].symbol);
+        found=true;
+    }
+  }         
+  console.log("found", found);
+  if(!found){
+    stockArray.push(addStock);
+    localStorage.setItem("stockSymbol", JSON.stringify(stockArray));
+  }  
+}
+
+function cryptoStocks(cryptoId){
+  var found=false;
+  var cryptoArray=[];
+  var addCrypto = {
+      crypto : cryptoId,
+              };
+  var cryptoArray = JSON.parse(localStorage.getItem("cryptoObj") || "[]");
+  
+  console.log(cryptoArray);
+  // check for duplicate city name
+  for(var i=0; i < cryptoArray.length; i++){
+    
+    if(cryptoArray[i].city===cryptoId){
+      console.log(cryptoArray[i].crypto);
+        found=true;
+    }
+  }         
+  console.log("found", found);
+  if(!found){
+    cryptoArray.push(addCrypto);
+    localStorage.setItem("cryptoObj", JSON.stringify(cryptoArray));
+  }  
+}
 
 function init(){
   return $('#favsModal').foundation('open')
