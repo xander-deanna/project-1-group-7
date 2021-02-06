@@ -280,4 +280,3 @@ function displayCryptoSearch(cryptoData) {
 
   featuredList.appendChild(featuredEl);
 }
-
