@@ -14,7 +14,7 @@ async function STKSearchHandler(event) {
     console.log(matches)
     if (matches['bestMatches']) matches = matches['bestMatches']
     for (let i in matches)   {
-        console.log(matches[i])
+        let data = await STKgetData()
     }
 }
 
@@ -26,9 +26,9 @@ async function STKgetSymbolSearch(keywords) {
 }
 
 // Get data for stock by symbol
-async function STKgetData(symbol, interval) {
+async function STKgetData(symbol) {
     return await (
-        await fetch(`${STKIntradayURL}&symbol=${symbol}&interval=${interval}`)
+        await fetch(`${STKIntradayURL}&symbol=${symbol}`)
     ).json()
 }
 var stocksListEl = document.getElementById("stocksList");
