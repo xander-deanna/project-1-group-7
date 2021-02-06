@@ -192,7 +192,7 @@ cryptoFavSearch.addEventListener('click', function(){
   var favCryptoLi = document.createElement('li');
   var favCryptoiEl = document.createElement('i')
   // favCryptoiEl.setAttribute("id", "favCrypto")
-  favCryptoiEl.className ='fa fa-star'
+  favCryptoiEl.className ='far fa-star'
   favCryptoiEl.textContent = cryptoList.value
   favCryptoLi.appendChild(favCryptoiEl)
   cryptoList.appendChild(favCryptoLi)
