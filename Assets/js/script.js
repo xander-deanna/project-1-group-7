@@ -185,17 +185,11 @@ function displayCrypto(cryptoData) {
 }
 
 
-var cryptoFavSearch = document.querySelector("#cryptofav");
+var cryptoFavSearch = document.querySelector("#favBtn");
 
 cryptoFavSearch.addEventListener('click', function(){
-  var cryptoList = document.querySelector("#cryptoList")
-  var favCryptoLi = document.createElement('li');
-  var favCryptoiEl = document.createElement('i')
-  // favCryptoiEl.setAttribute("id", "favCrypto")
-  favCryptoiEl.className ='far fa-star'
-  favCryptoiEl.textContent = cryptoList.value
-  favCryptoLi.appendChild(favCryptoiEl)
-  cryptoList.appendChild(favCryptoLi)
+  getCryptoFav()
+  
 })
 
   
@@ -269,8 +263,9 @@ function displayCryptoSearch(cryptoData) {
 
   var cryptoSearchValue = cryptoSearch.value
   console.log(cryptoSearchValue)
+  var cryptoSearchValueCaps = cryptoSearchValue.toUpperCase()
 
-  var cryptoResult = cryptoSearchValue + ":" + " " + cryptoData.data.rates[cryptoSearchValue]
+  var cryptoResult = cryptoSearchValueCaps + ":" + " " + cryptoData.data.rates[cryptoSearchValueCaps]
   console.log(cryptoResult);
 
   var featuredList = document.querySelector("#cryptoList")
@@ -280,3 +275,46 @@ function displayCryptoSearch(cryptoData) {
 
   featuredList.appendChild(featuredEl);
 }
+
+
+function getCryptoFav() {
+  var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
+  console.log(requestUrl);
+  fetch(requestUrl)
+    .then(function (response) {
+      console.log(response)
+      if (response.ok) {
+        return response.json()
+          .then(function (cryptoData) {
+            if (cryptoData["Error Message"]) {
+              return $('#errorModal').foundation('open')
+            }
+            console.log("crypto data: ", cryptoData)
+            displayCryptoFav(cryptoData)
+            return cryptoData
+          })
+
+      }
+    })
+}
+
+function displayCryptoFav(cryptoData) {
+  var cryptoFavInput = document.querySelector('#cryptoFav')
+
+  var cryptoFavValue = cryptoFavInput.value
+  console.log(cryptoFavValue)
+  var cryptoFavValueCaps = cryptoFavValue.toUpperCase()
+
+  var cryptoFavResult = cryptoFavValueCaps + ":" + " " + cryptoData.data.rates[cryptoFavValueCaps]
+  console.log(cryptoFavResult);
+  
+  var cryptoList = document.querySelector("#favCryptoList")
+  var favCryptoLi = document.createElement('li');
+  var favCryptoiEl = document.createElement('i')
+  favCryptoiEl.className ='far fa-star'
+  favCryptoiEl.textContent = cryptoFavResult
+  favCryptoLi.appendChild(favCryptoiEl)
+  cryptoList.appendChild(favCryptoLi)
+}
+
+
