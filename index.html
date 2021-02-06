@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,6 +45,7 @@
             <button id="stocksBtn" type="button" class="button">Search</button>
           </span>
         </div>
+
         <!-- stocks results list -->
         <div class="row">
           <div class="row">
@@ -55,13 +57,8 @@
             <div class="columns small-2">volume</div>
           </div>
         </div>
-        <div class="row align-right" id="render-stock">
-          
-
-        </div>
-         
-              
-         
+        <div class="row align-right" id="render-stock"></div>
+    
         <!-- <ul id="stocksList">
           <li>Test li, please delete before working on JS</li>
           <li>Test li, please delete before working on JS</li>
@@ -90,42 +87,32 @@
         <!-- crypto results list -->
         <h6 class= "boxTitle text-center" id="featureTitle">Featured Currency Rates</h6>
         <ul id="cryptoList">
-           <li><i class="far fa-star" id="btcfeature"></i><i></i></li>
-           <li><i class="far fa-star" id="fav2"></i><i></i></li>
-           <li><i class="far fa-star" id="fav3"></i><i></i></li>
-          
+           <li><i class="far fa-star" id="btcfeature"></i></li>
         </ul>
         <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear</button>
       </div>
 
-
-
+      <!-- error modal -->
       <div class="reveal" id="errorModal" data-reveal>
-        <h1 class = "alert">Error!</h1>
+        <h1 class= "alert">Error!</h1>
         <p class="lead alert">Invalid Input. Please try your search again.</p>
         <button class="close-button alert" data-close aria-label="Close modal" type="button">
           <span class= "alert" aria-hidden="true">&times;</span>
         </button>
       </div>
 
+      <!-- favorites modal -->
       <div class="reveal" id="favsModal" data-reveal>
-        <h1 class = "alert">Welcome to Tradify</h1>
+        <h1 class= "alert">Welcome to Tradify</h1>
         <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
-        <button class="close-button alert" data-close aria-label="Close modal" type="button">
-          <span class= "alert" aria-hidden="true">&times;</span>
-           <input id="cryptofav" type="search" class="search" placeholder="Enter Crypto Here"></input>
-           <input id="stockfav" type="search" class="search" placeholder="Enter Stocks Here"></input>
-        </button>
+        <button class="close-button alert" data-close aria-label="Close modal" type="button"></button>
+          <span id="favSearch" class= "alert" aria-hidden="true">
+           <input id="cryptoFav" type="search" class="search" placeholder="Enter Crypto Here"></input>
+           <input id="stockFav" type="search" class="search" placeholder="Enter Stocks Here"></input>
+           <button id="favBtn" type="button" class="button">Search</button>
+          </span>
       </div>
-
-
-
-
-
     </div>
-
-
-
 
     <!-- javaScript for foundation css styling -->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -135,7 +122,7 @@
     </script>
 
     <!-- our javaScript-->
-    <script src="./Assets/js/script.js"></script>
+    <script src="./Assets/js/script.js" defer></script>
 
   </body>
 </html>
