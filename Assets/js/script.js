@@ -1,11 +1,42 @@
 
+// ------------------------------ INIT ------------------------------------
 let STKapiKey = 'U65M3D2LOCIOUFEM'
-let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&apikey=${STKapiKey}`
+let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey}`
 let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey}`
-let STKlst
+
+//Variables for search elements
+var stocksSearchBtn = document.getElementById("stocksBtn")
+var cryptoSearchBtn = document.getElementById("cryptoBtn")
+
+//Stocks search event listener for main (index) page
+stocksSearchBtn.addEventListener("click", function(){
+    document.getElementById("render-stock").innerHTML = ""
+    STKSearchHandler()
+});
+
+//Crypto search event listener for main (index) page
+cryptoSearchBtn.addEventListener("click", function(){
+  cryptoListEl.innerHTML = ""
+  cryptoSearchHandler()
+});
+
+renderDefaultStocks()
+// -------------------------------------------------------------------
 
 
-fetch('stocks.json').then(response => response.json()).then(data => STKlst = data)
+// ---------------------------- STOCKs ---------------------------------
+async function renderDefaultStocks(){
+    // display default / favorite stocks
+    var stocksymbol=["AMZN", "IBM","DIS"]
+    var stocks = []
+    for (var i in stocksymbol){
+        stocks.push(await STKgetData(stocksymbol[i]))
+    }
+    displayStocks(stocks)
+}
+
+
+// IVAN STOCK
 
 // Called on stock search button clicked
 // Populates stock list with results
@@ -13,11 +44,13 @@ async function STKSearchHandler(event) {
     let query = document.getElementById('stocksSearch').value
     let matches = await STKgetSymbolSearch(query.replace(' ', ','))
     console.log(matches)
-    if (matches['bestMatches']) matches = matches['bestMatches']
-    for (let i in matches)   {
-        let data = await STKgetData(matches[i]['symbol'])
-        
+    let stocks = []
+    for (let i in matches['bestMatches'])   {
+        stocks.push(
+            await STKgetData(matches['bestMatches'][i]['symbol'])
+        )
     }
+    displayStocks(stocks)
 }
 
 // Gets stocks that match search query
@@ -34,140 +67,32 @@ async function STKgetData(symbol) {
     ).json()
 }
 
-
-var renderStockDiv=document.getElementById("render-stock");
-
-var stocksListEl = document.getElementById("stocksList");
-
-//Variables for search elements
-var stocksSearchBtn = document.getElementById("stocksBtn")
-var cryptoSearchBtn = document.getElementById("cryptoBtn")
-
-//Stocks search event listener for main (index) page
-stocksSearchBtn.addEventListener("click", function(){
-  var stocksListEl = document.querySelector("#stocksList")
-  stocksListEl = ""
-  STKSearchHandler()
-});
-
-//Crypto search event listener for main (index) page
-cryptoSearchBtn.addEventListener("click", function(){
-  var cryptoListEl = document.querySelector("#cryptoList")
-  cryptoListEl = ""
-  cryptoSearchHandler()
-});
-
-renderStockList();
-
-
-function renderStockList(){
-  var stocksymbol=["AMZN", "IBM","DIS"]
-  for (var i in stocksymbol){
-    var symbol=stocksymbol[i];
-    getStocks(symbol, i);
-  }
+// create table of stocks
+function displayStocks(stocks) {
+    console.log(stocks)
+    for (let i in stocks) {
+        let row = document.createElement('tr')
+        row.appendChild(
+            document.createElement('td').appendChild(
+                document.createTextNode(stocks[i]['Meta Data']['2. Symbol'])
+            )
+        )
+        let currentDayData = stocks[i]['Time Series (Daily)'][
+            Object.keys(stocks[i]['Time Series (Daily)'])[0]
+        ]
+        for (let field in currentDayData) {
+            row.appendChild(
+                document.createElement('td').appendChild(
+                    document.createTextNode(parseFloat(currentDayData[field]).toFixed(2))
+                )
+            )
+        }
+        document.getElementById('stock-render').appendChild(row)
+    }
 }
+// -------------------------------------------------------------------
 
-function getStocks(symbol, i){
-    console.log(symbol);
-    var requestUrl =  'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=U65M3D2LOCIOUFEM'  
-       
-
-    console.log(requestUrl);
-    
-
-    fetch(requestUrl )
-      .then(function (response) {
-        return response.json();
-       })
-       
-      .then(function (data) {
-        console.log("Stock data ", data)
-        
-        var lastStock=(data['Time Series (Daily)']);
-        
-         console.log("last stock id :", lastStock);
-         console.log("last stock at index 1",lastStock[1] );
-         console.log("key ",Object.keys(lastStock));
-         var objKeys=Object.keys(lastStock);
-        var propOfLastEntry=objKeys.shift();
-        
-          console.log("propofLastEntry ",propOfLastEntry);
-        var lastStocktorender=lastStock[propOfLastEntry];
-          console.log("Last stock object ",lastStocktorender);
-        var rowEl=document.createElement("div");
-        rowEl.classList.add("row");
-        
-        
-        
-        var symbolEl=document.createElement("div");
-        symbolEl.classList.add("columns");
-        
-        symbolEl.classList.add("small-2");
-        symbolEl.textContent=symbol;
-        
-        rowEl.append(symbolEl);
-        var symbolE2=document.createElement("div");
-        symbolE2.classList.add("columns");
-        var objValOpen=Number(lastStocktorender['1. open']);
-        symbolE2.textContent=objValOpen.toFixed(2);
-        symbolE2.classList.add("small-2");
-        rowEl.append(symbolE2);
-        var symbolE3=document.createElement("div");
-        symbolE3.classList.add("columns");
-        var objValhigh=Number(lastStocktorender['2. high']);
-        symbolE3.textContent=objValhigh;
-        symbolE3.classList.add("small-2");
-        rowEl.append(symbolE3);
-        var symbolE4=document.createElement("div");
-        symbolE4.classList.add("columns");
-        var objValLow=Number(lastStocktorender['3. low']);
-        symbolE4.textContent=objValLow;
-        symbolE4.classList.add("small-2");
-        rowEl.append(symbolE4);
-        var symbolE5=document.createElement("div");
-        symbolE5.classList.add("columns");
-        var objValClose=Number(lastStocktorender['4. close']);
-        symbolE5.textContent=objValClose;
-        symbolE5.classList.add("small-2");
-        rowEl.append(symbolE5);
-        var symbolE6=document.createElement("div");
-        symbolE6.classList.add("columns");
-        var objValVolume=Number(lastStocktorender['5. volume']);
-        symbolE6.textContent=objValVolume;
-        symbolE6.classList.add("small-2");
-        rowEl.append(symbolE6);
-        renderStockDiv.append(rowEl);
-      });
-}
-
-
-
-function getStock() {
-
-  var requestUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=U65M3D2LOCIOUFEM'
-
-  console.log(requestUrl);
-
-  fetch(requestUrl)
-    .then(function (response) {
-
-      if (response.ok) {
-        return response.json()
-          .then(function (stockData) {
-            if (stockData["Error Message"]) {
-              return $('#errorModal').foundation('open')
-            }
-            console.log("stock data:", stockData)
-          })
-
-      }
-
-    })
-}
-
-
-
+// ----------------------- CRYPTO ------------------------------------
 var cryptoListEl = document.getElementById("cryptoList");
 
 // Fetch for Crypto
@@ -230,3 +155,4 @@ function displayCrypto(cryptoData) {
 
 
 }
+// -------------------------------------------------------------------
