@@ -311,10 +311,7 @@ function displayCryptoFav(cryptoData) {
   
   var cryptoList = document.querySelector("#favCryptoList")
   var favCryptoLi = document.createElement('li');
-  var favCryptoiEl = document.createElement('i');
-  favCryptoiEl.className ='far fa-star'
-  favCryptoiEl.textContent = cryptoFavResult
-  favCryptoLi.appendChild(favCryptoiEl);
+  favCryptoLi.textContent = cryptoFavResult
   cryptoList.appendChild(favCryptoLi);
 
   saveCrypto(cryptoFavValueCaps);
