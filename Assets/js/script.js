@@ -1,7 +1,7 @@
 
 // ------------------------------ INIT ------------------------------------
-//let STKapiKey = 'U65M3D2LOCIOUFEM'
-let STKapiKey = '360MOC21QRQBN4A7'
+let STKapiKey = 'U65M3D2LOCIOUFEM'
+//let STKapiKey = '360MOC21QRQBN4A7'
 let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey}`
 let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey}`
 
@@ -136,7 +136,7 @@ async function displayStocks(stocks) {
 
 function updateStockFavs(event, symbol) {
     let favs = JSON.parse(localStorage.getItem('stockFavorites'))
-    if (favs.find(fav => fav == symbol)) {
+    if (!favs.find(fav => fav == symbol)) {
         favs.push(symbol)
         event.target.className = 'fa fa-star'
     } else {
@@ -144,12 +144,15 @@ function updateStockFavs(event, symbol) {
             favs.indexOf(symbol),
             1
         )
-        event.target.className = 'fa fa-star'
+        event.target.className = 'far fa-star'
     }
+    localStorage.setItem('stockFavorites', JSON.stringify(favs))
 }
 
 async function displayStockFavs(favs) {
-    
+    for (let i in favs) {
+        
+    }
 }
 
 function td(content, className='') {
