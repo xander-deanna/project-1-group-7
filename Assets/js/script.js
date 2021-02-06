@@ -15,6 +15,11 @@ init()
 getCrypto()
 stockIndex = []
 
+var tryAgain = document.querySelector("#TryFavAgainBtn");
+tryAgain.addEventListener("click", function(){
+  return $('#favsModal').foundation('open')
+});
+
 //Variables for search elements
 var stocksSearchBtn = document.getElementById("stocksBtn")
 var cryptoSearchBtn = document.getElementById("cryptoBtn")
@@ -154,7 +159,7 @@ function displayCrypto(cryptoData) {
   console.log(bitcoinPrice)
   // adds current BTC rate to HTML
   var btcFeature = document.querySelector("#btcfeature")
-  btcFeature.textContent = "BTC: " + bitcoinPrice;
+  btcFeature.textContent = " BTC: " + bitcoinPrice;
 
 
   var topCrypto = [];
@@ -185,10 +190,20 @@ function displayCrypto(cryptoData) {
 }
 
 
-var cryptoFavSearch = document.querySelector("#favBtn");
+var favSearch = document.querySelector("#favBtn");
 
-cryptoFavSearch.addEventListener('click', function(){
-  getCryptoFav()
+favSearch.addEventListener('click', function(){
+  var favCryptoInput = document.querySelector("#cryptoFav")
+  var favStockInput = document.querySelector("#stockFav")
+  if (favCryptoInput !== null){
+    getCryptoFav()
+  }
+  if (favStockInput !== null){
+    // get fav Stock function
+  }
+
+  return $('#errorModal').foundation('open')
+  
   
 })
 
@@ -268,6 +283,10 @@ function displayCryptoSearch(cryptoData) {
   var cryptoResult = cryptoSearchValueCaps + ":" + " " + cryptoData.data.rates[cryptoSearchValueCaps]
   console.log(cryptoResult);
 
+  if(cryptoData.data.rates[cryptoSearchValueCaps] === undefined){
+    return $('#errorModal').foundation('open')
+  }
+
   var featuredList = document.querySelector("#cryptoList")
   var featuredEl = document.createElement('li');
 
@@ -306,9 +325,13 @@ function displayCryptoFav(cryptoData) {
   console.log(cryptoFavValue)
   var cryptoFavValueCaps = cryptoFavValue.toUpperCase()
 
-  var cryptoFavResult = cryptoFavValueCaps + ":" + " " + cryptoData.data.rates[cryptoFavValueCaps]
+  var cryptoFavResult = " " + cryptoFavValueCaps + ":" + " " + cryptoData.data.rates[cryptoFavValueCaps]
   console.log(cryptoFavResult);
   
+  if(cryptoData.data.rates[cryptoFavValueCaps] === undefined){
+    return $('#errorModal').foundation('open')
+  }
+
   var cryptoList = document.querySelector("#favCryptoList")
   var favCryptoLi = document.createElement('li');
   var favCryptoiEl = document.createElement('i');
