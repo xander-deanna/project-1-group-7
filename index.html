@@ -84,10 +84,17 @@
             <button id="cryptoBtn" type="button" class="button">Search</button>
           </span>
         </div>
-        <!-- crypto results list -->
+        <!-- crypto favorite list -->
+        <h6 class= "boxTitle text-center" id="favTitle">Favorite Crypto</h6>
+        <ul id="favCryptoList">
+           <li><i class="far fa-star" id="btcfeature"></i></li>
+        </ul>
+        <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear</button>
+      </div>
+
         <h6 class= "boxTitle text-center" id="featureTitle">Featured Currency Rates</h6>
         <ul id="cryptoList">
-           <li><i class="far fa-star" id="btcfeature"></i></li>
+           <!-- <li><i class="far fa-star" id="btcfeature"></i></li> -->
         </ul>
         <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear</button>
       </div>
@@ -109,7 +116,7 @@
           <span id="favSearch" class= "alert" aria-hidden="true">
            <input id="cryptoFav" type="search" class="search" placeholder="Enter Crypto Here"></input>
            <input id="stockFav" type="search" class="search" placeholder="Enter Stocks Here"></input>
-           <button id="favBtn" type="button" class="button">Search</button>
+           <button id="favBtn" type="button" class="button">Add</button>
           </span>
       </div>
     </div>
