@@ -123,3 +123,10 @@ color: rgb(3, 11, 82);
 border-color:rgb(241, 6, 6)
 
 }
+
+.stock-table thead {
+    background-color: #222222;
+}
+
+tbody tr:nth-child(odd) {background-color: #868686;}
+tbody tr:nth-child(even){background-color: #424242;}
