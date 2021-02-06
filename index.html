@@ -1,4 +1,3 @@
-<!doctype html>
 <html class="no-js" lang="en">
 
   <head>
@@ -38,6 +37,7 @@
 
       <!-- stocks box -->
       <div id="stocksBox" class= "medium-5 columns callout">
+
         <div id="stocksHead" class="text-center">
           <h4 id="stocksTitle" class= "boxTitle">Stocks Heading Test</h4>
           <span class="searchBox">
@@ -46,30 +46,27 @@
           </span>
         </div>
 
-        <!-- stocks results list -->
-        <div class="row">
-          <div class="row">
-            <div class="columns small-2">Symbol</div>
-            <div class="columns small-2">Open</div>
-            <div class="columns small-2">High</div>
-            <div class="columns small-2">low</div>
-            <div class="columns small-2">close</div>
-            <div class="columns small-2">volume</div>
-          </div>
-        </div>
-        <div class="row align-right" id="render-stock"></div>
-    
-        <!-- <ul id="stocksList">
-          <li>Test li, please delete before working on JS</li>
-          <li>Test li, please delete before working on JS</li>
-          <li>Test li, please delete before working on JS</li>
-          <li>Test li, please delete before working on JS</li>
-          <li>Test li, please delete before working on JS</li>
-        </ul> -->
-          <div class="row">
-            <button id="clearBtnNews" class="clearBtn button" type="button">Clear</button>
-          </div>
-        </div>
+        <!-- stocks results table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Open</th>
+              <th>High</th>
+              <th>Low</th>
+              <th>Close</th>
+              <th>Volume</th>
+              <!-- up/down arrow example -->
+              <th></th>
+              <!-- up/down favorites star example -->
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="stock-render">
+          </tbody>
+        </table>
+        <button id="clearBtnStocks" class="clearBtn button" type="button">Clear</button>
+      </div>
 
       <!-- empty div to maintain space between boxes -->
       <div class= "empty medium-2 columns"></div>
@@ -78,14 +75,14 @@
       <div id="cryptoBox" class= "medium-5 columns callout">
         <div id="cryptoHead" class="text-center">
           <h4 id="cryptoTitle" class= "boxTitle">Crypto Exchange Rates</h4>
-          <p>1 USD Equals</p>
+          <p>Displayed in USD</p>
           <span class="searchBox">
             <input id="cryptoSearch" type="search" class="search" placeholder="Search"></input>
             <button id="cryptoBtn" type="button" class="button">Search</button>
           </span>
         </div>
         <!-- crypto results list -->
-        <h6 class= "boxTitle text-center" id="featureTitle">Featured Currency Rates</h6>
+        <h6 class= "boxTitle text-center" id="featuretitle">Featured Currency Rates</h6>
         <ul id="cryptoList">
            <li><i class="far fa-star" id="btcfeature"></i></li>
         </ul>
@@ -122,7 +119,7 @@
     </script>
 
     <!-- our javaScript-->
-    <script src="./Assets/js/script.js" defer></script>
+    <script src="./Assets/js/script.js"></script>
 
   </body>
 </html>
