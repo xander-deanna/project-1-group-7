@@ -7,6 +7,7 @@ let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&api
 var renderStockDiv=document.getElementById("render-stock");
 var stocksListEl = document.getElementById("stocksList");
 var clearCryptoEl =document.getElementById("clearBtnCrypto");
+var clearStocksEl =document.getElementById("stockFavBtn");
 function init(){
   return $('#favsModal').foundation('open')
 }
@@ -367,4 +368,21 @@ clearCryptoEl.addEventListener("click", function(){
   var cryptoList = document.querySelector("#favCryptoList");
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   cryptoList.textContent="";
+})
+
+
+function addStockFav() {
+  var stockFavInput = document.querySelector('#stockFav');
+
+  var stockFavValue = stockFavInput.value;
+  console.log(stockFavValue);
+  var stockFavValueeCaps = stockFavValue.toUpperCase();
+  saveStocks(stockFavValueeCaps);
+
+  
+}
+clearStocksEl.addEventListener("click", function(){
+  var stockArray=[];
+  localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
+  
 })
