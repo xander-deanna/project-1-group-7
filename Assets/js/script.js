@@ -36,20 +36,11 @@ cryptoSearchBtn.addEventListener("click", function(){
   getCryptoSearch()
 });
 
-
-renderDefaultStocks();
+// Only display favorites
+displayStocks([])
 
 
 // --------------------------- STOCKs ---------------------------------
-async function renderDefaultStocks(){
-    // display default / favorite stocks
-    var stocksymbol=["AMZN", "IBM","DIS"]
-    var stocks = []
-    for (var i in stocksymbol){
-        stocks.push(await STKgetData(stocksymbol[i]))
-    }
-    displayStocks(stocks)
-}
 
 // Called on stock search button clicked
 // Populates stock list with results
@@ -89,7 +80,7 @@ async function displayStocks(stocks) {
         favs.push(await STKgetData(favsSymbols[i]))
     }
     displayStockFavs(favs)
-
+    
     for (let i in stocks) {
         let symbol = stocks[i]['Meta Data']['2. Symbol']
         if (!favs.find(fav => fav == symbol)) { // if not a favorite
@@ -122,36 +113,15 @@ async function displayStocks(stocks) {
                 )
             }
 
-            // favorites
-            row.appendChild(
-                td(
-                    favoriteIcon('far fa-star', symbol)
-                )
-            )
-
             document.getElementById('stock-render').appendChild(row)
         }
     }
 }
 
-function updateStockFavs(event, symbol) {
-    let favs = JSON.parse(localStorage.getItem('stockFavorites'))
-    if (!favs.find(fav => fav == symbol)) {
-        favs.push(symbol)
-        event.target.className = 'fa fa-star'
-    } else {
-        favs.splice(
-            favs.indexOf(symbol),
-            1
-        )
-        event.target.className = 'far fa-star'
-    }
-    localStorage.setItem('stockFavorites', JSON.stringify(favs))
-}
 
 async function displayStockFavs(favs) {
     for (let i in favs) {
-        
+
     }
 }
 
