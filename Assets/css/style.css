@@ -111,3 +111,9 @@ li {
 .fa-level-down-alt {
     color: #f38066;
 }
+
+.alert{
+color: rgb(3, 11, 82);
+border-color:rgb(241, 6, 6)
+
+}
