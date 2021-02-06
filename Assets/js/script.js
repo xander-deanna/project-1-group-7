@@ -1,17 +1,25 @@
-let newsApiKey = '8b50cf18f1f349ef9cbcfe1da08d1537' // lol
+let STKapiKey = 'U65M3D2LOCIOUFEM'
+let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&apikey=${STKapiKey}`
+let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey}`
+let STKlst
 
-getNews('hi').then(data => console.log(data))
 
-function newsSearchHandler(event) {
+fetch('stocks.json').then(response => response.json()).then(data => STKlst = data)
+
+async function stockSearchHandler(event) {
     let query = document.getElementById('newsSearch').nodeValue
-    getNews(query).then(data => {
-
-    })
+    let matches = STKgetSymbolSearch(query.replace(' ', ','))
+    console.log(matches)
 }
 
-async function getNews(q) {
-    let date = new Date()
+async function STKgetSymbolSearch(keywords) {
     return await (
-        await fetch(`http://newsapi.org/v2/everything?q=${q}&from=${date.getFullYear()}-${date.getMonth}-${date.getDay()}&sortBy=publishedAt&apiKey=${newsApiKey}`) 
+        await fetch(`${STKSearchURL}&keywords=${keywords}`)
+    ).json()
+}
+
+async function STKgetData(symbol, interval) {
+    return await (
+        await fetch(`${STKIntradayURL}&symbol=${symbol}&interval=${interval}`)
     ).json()
 }
