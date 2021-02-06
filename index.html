@@ -39,7 +39,8 @@
       <div id="stocksBox" class= "medium-5 columns callout">
 
         <div id="stocksHead" class="text-center">
-          <h4 id="stocksTitle" class= "boxTitle">Stocks Heading Test</h4>
+          <h4 id="stocksTitle" class= "boxTitle">Stocks Exchange Rates</h4>
+          <p>Displayed in USD</p>
           <span class="searchBox">
             <input id="stocksSearch" type="search" class="search" placeholder="Search"></input>
             <button id="stocksBtn" type="button" class="button">Search</button>
@@ -60,9 +61,9 @@
               <th></th>
             </tr>
           </thead>
-          <tbody class='stock-table-body' id="stock-render">
 
-          </tbody>
+          <tbody id="stock-render"></tbody>
+
         </table>
         <button id="clearBtnStocks" class="clearBtn button" type="button">Clear</button>
       </div>
@@ -84,16 +85,12 @@
         <!-- crypto favorite list -->
         <h6 class= "boxTitle text-center" id="favTitle">Favorite Crypto</h6>
         <ul id="favCryptoList">
-           <li><i class="far fa-star" id="btcfeature"></i></li>
+           <li id="btcfeature"></li>
         </ul>
-        <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear</button>
-      </div>
-
-        <h6 class= "boxTitle text-center" id="featureTitle">Featured Currency Rates</h6>
-
+        <br>
+        
         <!-- crypto results list -->
         <h6 class= "boxTitle text-center" id="featuretitle">Featured Currency Rates</h6>
-
         <ul id="cryptoList">
            <!-- <li><i class="far fa-star" id="btcfeature"></i></li> -->
         </ul>
@@ -107,17 +104,21 @@
         <button class="close-button alert" data-close aria-label="Close modal" type="button">
           <span class= "alert" aria-hidden="true">&times;</span>
         </button>
+        <span id="favSearch" class= "alert" aria-hidden="true">
+          <button id="TryFavAgainBtn" type="button" class="button">Try Again</button>
+        </span>
       </div>
 
       <!-- favorites modal -->
       <div class="reveal" id="favsModal" data-reveal>
         <h1 class= "alert">Welcome to Tradify</h1>
         <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
-        <button class="close-button alert" data-close aria-label="Close modal" type="button"></button>
+        <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
           <span id="favSearch" class= "alert" aria-hidden="true">
            <input id="cryptoFav" type="search" class="search" placeholder="Enter Crypto Here"></input>
+           <button id="cryptoFavBtn" type="button" class="button">Add</button>
            <input id="stockFav" type="search" class="search" placeholder="Enter Stocks Here"></input>
-           <button id="favBtn" type="button" class="button">Add</button>
+           <button id="stockFavBtn" type="button" class="button">Add</button>
           </span>
       </div>
     </div>
