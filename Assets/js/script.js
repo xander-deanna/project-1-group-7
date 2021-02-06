@@ -34,13 +34,17 @@ renderStockList();
 
 function renderStockList(){
   var stocksymbol=["AMZN", "IBM","DIS"]
-  for (var i in stocksymbol){
-    var symbol=stocksymbol[i];
-    getStocks(symbol, i);
-  }
+  
+  // randomly selects one stock to be displayed
+ 
+  var symbolIndex = Math.floor(Math.random() * stocksymbol.length)
+  console.log(symbolIndex);
+  getStocks(stocksymbol[symbolIndex]);
+  console.log(stocksymbol[symbolIndex]);
+  
 }
 
-function getStocks(symbol, i){
+function getStocks(symbol){
     console.log(symbol);
     var requestUrl =  'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=U65M3D2LOCIOUFEM'  
        
@@ -59,7 +63,7 @@ function getStocks(symbol, i){
         var lastStock=(data['Time Series (Daily)']);
         
          console.log("last stock id :", lastStock);
-         console.log("last stock at index 1",lastStock[1] );
+        
          console.log("key ",Object.keys(lastStock));
          var objKeys=Object.keys(lastStock);
         var propOfLastEntry=objKeys.shift();
