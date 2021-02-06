@@ -6,7 +6,7 @@ let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&api
 
 var renderStockDiv=document.getElementById("render-stock");
 var stocksListEl = document.getElementById("stocksList");
-
+var clearCryptoEl =document.getElementById("clearBtnCrypto");
 function init(){
   return $('#favsModal').foundation('open')
 }
@@ -186,7 +186,8 @@ function displayCrypto(cryptoData) {
   }
 
 // -------------------------------------------------------------------
-
+  // get fav crypto from local storage
+    renderCryptoLocalStorage(cryptoData); 
 }
 
 
@@ -338,6 +339,32 @@ function displayCryptoFav(cryptoData) {
   cryptoList.appendChild(favCryptoLi);
 
   saveCrypto(cryptoFavValueCaps);
+
 }
 
+function renderCryptoLocalStorage(cryptoData){
+  var cryptoArray=[];
+    if (localStorage.cryptoFavorites){
+      
+      var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
+      console.log(cryptoArray.length);
+      for(var i=0; i < cryptoArray.length; i++){
+      
+          console.log(cryptoArray[i]);
+          var cryptoFavResult = cryptoArray[i] + ":" + " " + cryptoData.data.rates[cryptoArray[i]]
+          console.log(cryptoFavResult);
+          var cryptoList = document.querySelector("#favCryptoList")
+          var favCryptoLi = document.createElement('li');
+          favCryptoLi.textContent = cryptoFavResult
+          cryptoList.appendChild(favCryptoLi);
+          
+      }
+  }
+}
 
+clearCryptoEl.addEventListener("click", function(){
+  var cryptoArray=[];
+  var cryptoList = document.querySelector("#favCryptoList");
+  localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
+  cryptoList.textContent="";
+})
