@@ -1,9 +1,14 @@
 
 var renderStockDiv=document.getElementById("render-stock");
 var stocksListEl = document.getElementById("stocksList");
+
 init()
 
-
+function init(){
+  return $('#favsModal').foundation('open')
+  
+}
+getCrypto()
 
 
 
@@ -25,8 +30,10 @@ stocksSearchBtn.addEventListener("click", function(){
 //Crypto search event listener for main (index) page
 cryptoSearchBtn.addEventListener("click", function(){
   var cryptoListEl = document.querySelector("#cryptoList")
-  cryptoListEl = ""
-  cryptoSearchHandler()
+  var featureTitle = document.querySelector("#featureTitle")
+  cryptoListEl.textContent = " "
+  featureTitle.textContent = "Your Search Results"
+  getCryptoSearch()
 });
 
 
@@ -142,7 +149,7 @@ function getStock() {
 
 var cryptoListEl = document.getElementById("cryptoList");
 
-// Fetch for Crypto
+// Fetch for featured crypto
 function getCrypto() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
   console.log(requestUrl);
@@ -165,7 +172,7 @@ function getCrypto() {
 
 
 }
-getCrypto()
+
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
 function displayCrypto(cryptoData) {
   
@@ -215,9 +222,46 @@ cryptoFavSearch.addEventListener('click', function(){
   cryptoList.appendChild(favCryptoLi)
 })
 
-function init(){
-  return $('#favsModal').foundation('open')
 
+
+// Fetch for User Search Crypto
+function getCryptoSearch() {
+  var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
+  console.log(requestUrl);
+  fetch(requestUrl)
+    .then(function (response) {
+      console.log(response)
+      if (response.ok) {
+        return response.json()
+          .then(function (cryptoData) {
+            if (cryptoData["Error Message"]) {
+              return $('#errorModal').foundation('open')
+            }
+            console.log("crypto data: ", cryptoData)
+            displayCryptoSearch(cryptoData)
+            return cryptoData
+          })
+
+      }
+    })
 
 
 }
+
+function displayCryptoSearch(cryptoData) {
+  var cryptoSearch = document.querySelector('#cryptoSearch')
+
+  var cryptoSearchValue = cryptoSearch.value
+  console.log(cryptoSearchValue)
+
+  var cryptoResult = cryptoSearchValue + ":" + " " + cryptoData.data.rates[cryptoSearchValue]
+  console.log(cryptoResult);
+
+  var featuredList = document.querySelector("#cryptoList")
+  var featuredEl = document.createElement('li');
+
+  featuredEl.textContent = cryptoResult;
+
+  featuredList.appendChild(featuredEl);
+}
+
