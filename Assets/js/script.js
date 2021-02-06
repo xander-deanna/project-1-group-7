@@ -14,7 +14,8 @@ async function STKSearchHandler(event) {
     console.log(matches)
     if (matches['bestMatches']) matches = matches['bestMatches']
     for (let i in matches)   {
-        let data = await STKgetData()
+        let data = await STKgetData(matches[i]['symbol'])
+        
     }
 }
 
