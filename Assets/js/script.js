@@ -60,6 +60,14 @@ function getCrypto() {
 getCrypto()
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
 function displayCrypto(cryptoData) {
+  
+  // pulls current BTC rate
+  var bitcoinPrice = cryptoData.data.rates.BTC
+  console.log(bitcoinPrice)
+  // adds current BTC rate to HTML
+  var btcFeature = document.querySelector("#btcfeature")
+  btcFeature.textContent = "BTC: " + bitcoinPrice;
+
 
   var topCrypto = [];
   console.log("crpto Data: ", cryptoData)
@@ -74,7 +82,18 @@ function displayCrypto(cryptoData) {
     console.log(topCrypto)
   }
 
-  // pulls item from topCrypto array
+  for (var i = 0; i < topCrypto.length; i++) {
+    var featuredCurrency = { [topCrypto[i]]: cryptoData.data.rates[topCrypto[i]] }
+    console.log(featuredCurrency)
+    var featuredList = document.querySelector("#cryptoList")
+    var featuredEl = document.createElement('li');
+    featuredEl.textContent = topCrypto[i] + ":" + " " + featuredCurrency[topCrypto[i]];
+    // featuredEl.textContent = featuredCurrency.value
+    featuredList.appendChild(featuredEl);
+
+  }
+
+  /*// pulls item from topCrypto array
   var topCryptoOneName = topCrypto[0]
   console.log(topCryptoOneName)
   //  pulls the current exchange rate from the data based on the currency abbreviation
@@ -140,13 +159,8 @@ function displayCrypto(cryptoData) {
   ]
   console.log(trendingCryptoFive);
   var fifthFeature = document.querySelector("#featurefive")
-  fifthFeature.textContent = trendingCryptoFive;
+  fifthFeature.textContent = trendingCryptoFive;*/
 
 
-  // pulls current BTC rate
-  var bitcoinPrice = cryptoData.data.rates.BTC
-  console.log(bitcoinPrice)
-  // adds current BTC rate to HTML
-  var btcFeature = document.querySelector("#btcfeature")
-  btcFeature.textContent = "BTC: " + bitcoinPrice;
+
 }
