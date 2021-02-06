@@ -1,6 +1,7 @@
 
 // ------------------------------ INIT ------------------------------------
-let STKapiKey = 'U65M3D2LOCIOUFEM'
+//let STKapiKey = 'U65M3D2LOCIOUFEM'
+let STKapiKey = '360MOC21QRQBN4A7'
 let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey}`
 let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey}`
 
@@ -81,27 +82,92 @@ async function STKgetData(symbol) {
 }
 
 // create table of stocks
-function displayStocks(stocks) {
-    console.log(stocks)
+async function displayStocks(stocks) {
+    let favsSymbols = JSON.parse(localStorage.getItem('stockFavorites'))
+    let favs = []
+    for (let i in favsSymbols) {
+        favs.push(await STKgetData(favsSymbols[i]))
+    }
+    displayStockFavs(favs)
+
     for (let i in stocks) {
-        let row = document.createElement('tr')
-        row.appendChild(
-            document.createElement('td').appendChild(
-                document.createTextNode(stocks[i]['Meta Data']['2. Symbol'])
-            )
-        )
-        let currentDayData = stocks[i]['Time Series (Daily)'][
-            Object.keys(stocks[i]['Time Series (Daily)'])[0]
-        ]
-        for (let field in currentDayData) {
+        let symbol = stocks[i]['Meta Data']['2. Symbol']
+        if (!favs.find(fav => fav == symbol)) { // if not a favorite
+            let row = document.createElement('tr')
+
+            row.appendChild(td(symbol))
+
+            let currentDayData = stocks[i]['Time Series (Daily)'][
+                Object.keys(stocks[i]['Time Series (Daily)'])[0]
+            ]
+            let previousDayData = stocks[i]['Time Series (Daily)'][
+                Object.keys(stocks[i]['Time Series (Daily)'])[1]
+            ]
+
+            // high, low, open, close
+            for (let field in currentDayData) {
+                row.appendChild(
+                    td(parseFloat(currentDayData[field]).toFixed(2))
+                )
+            }
+
+            // change since last day
+            if (parseFloat(previousDayData['close']) < parseFloat(currentDayData['high'])) {
+                row.appendChild(
+                    td('<i class="fa sort-down"></i>')
+                )
+            } else {
+                row.appendChild(
+                    td('<i class="fa sort-up"></i>')
+                )
+            }
+
+            // favorites
             row.appendChild(
-                document.createElement('td').appendChild(
-                    document.createTextNode(parseFloat(currentDayData[field]).toFixed(2))
+                td(
+                    favoriteIcon('far fa-star', symbol)
                 )
             )
+
+            document.getElementById('stock-render').appendChild(row)
         }
-        document.getElementById('stock-render').appendChild(row)
     }
+}
+
+function updateStockFavs(event, symbol) {
+    let favs = JSON.parse(localStorage.getItem('stockFavorites'))
+    if (favs.find(fav => fav == symbol)) {
+        favs.push(symbol)
+        event.target.className = 'fa fa-star'
+    } else {
+        favs.splice(
+            favs.indexOf(symbol),
+            1
+        )
+        event.target.className = 'fa fa-star'
+    }
+}
+
+async function displayStockFavs(favs) {
+    
+}
+
+function td(content, className='') {
+    let td = document.createElement('td')
+    if (typeof content == 'string') {
+        td.innerHTML = `<td>${content}</td>`
+    } else {
+        td.appendChild(content)
+    }
+    td.className = className
+    return td
+}
+
+function favoriteIcon(className, symbol) {
+    let i = document.createElement('i')
+    i.className = className
+    i.addEventListener('click', (event) => updateStockFavs(event, symbol))
+    return i
 }
 // -------------------------------------------------------------------
 
@@ -125,17 +191,17 @@ var cryptoListEl = document.getElementById("cryptoList");
 // Fetch for featured crypto
 function getCrypto() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
-  console.log(requestUrl);
+
   fetch(requestUrl)
     .then(function (response) {
-      console.log(response)
+
       if (response.ok) {
         return response.json()
           .then(function (cryptoData) {
             if (cryptoData["Error Message"]) {
               return $('#errorModal').foundation('open')
             }
-            console.log("crypto data: ", cryptoData)
+
             displayCrypto(cryptoData)
             return cryptoData
           })
@@ -151,28 +217,28 @@ function displayCrypto(cryptoData) {
   
   // pulls current BTC rate
   var bitcoinPrice = cryptoData.data.rates.BTC
-  console.log(bitcoinPrice)
+
   // adds current BTC rate to HTML
   var btcFeature = document.querySelector("#btcfeature")
   btcFeature.textContent = "BTC: " + bitcoinPrice;
 
 
   var topCrypto = [];
-  console.log("crpto Data: ", cryptoData)
+
   // gets list currency abbreviations from rate object keys
   var keys = Object.keys(cryptoData.data.rates)
   // randomly selects five currencies to be displayed, places them in empty topCrypto array to then be pulled
   for (var i = 0; i < 5; i++) {
     var cryptoKeys = Math.floor(Math.random() * keys.length)
-    console.log(cryptoKeys)
+
     var cryptoRandom = keys[cryptoKeys]
     topCrypto.push(cryptoRandom)
-    console.log(topCrypto)
+
   }
 
   for (var i = 0; i < topCrypto.length; i++) {
     var featuredCurrency = { [topCrypto[i]]: cryptoData.data.rates[topCrypto[i]] }
-    console.log(featuredCurrency)
+
     var featuredList = document.querySelector("#cryptoList")
     var featuredEl = document.createElement('li');
     featuredEl.textContent = topCrypto[i] + ":" + " " + featuredCurrency[topCrypto[i]];
@@ -204,7 +270,6 @@ function saveStocks(symbolId){
   // check for duplicate symbol name
   for(var i=0; i < stockArray.length; i++){
     if(stockArray[i] === symbolId){
-      console.log(stockArray[i].symbol);
         found=true;
     }
   }
@@ -239,17 +304,16 @@ function saveCrypto(cryptoId){
 // Fetch for User Search Crypto
 function getCryptoSearch() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
-  console.log(requestUrl);
+
   fetch(requestUrl)
     .then(function (response) {
-      console.log(response)
+
       if (response.ok) {
         return response.json()
           .then(function (cryptoData) {
             if (cryptoData["Error Message"]) {
               return $('#errorModal').foundation('open')
             }
-            console.log("crypto data: ", cryptoData)
             displayCryptoSearch(cryptoData)
             return cryptoData
           })
@@ -262,11 +326,11 @@ function displayCryptoSearch(cryptoData) {
   var cryptoSearch = document.querySelector('#cryptoSearch')
 
   var cryptoSearchValue = cryptoSearch.value
-  console.log(cryptoSearchValue)
+
   var cryptoSearchValueCaps = cryptoSearchValue.toUpperCase()
 
   var cryptoResult = cryptoSearchValueCaps + ":" + " " + cryptoData.data.rates[cryptoSearchValueCaps]
-  console.log(cryptoResult);
+
 
   var featuredList = document.querySelector("#cryptoList")
   var featuredEl = document.createElement('li');
@@ -279,17 +343,17 @@ function displayCryptoSearch(cryptoData) {
 
 function getCryptoFav() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
-  console.log(requestUrl);
+
   fetch(requestUrl)
     .then(function (response) {
-      console.log(response)
+
       if (response.ok) {
         return response.json()
           .then(function (cryptoData) {
             if (cryptoData["Error Message"]) {
               return $('#errorModal').foundation('open')
             }
-            console.log("crypto data: ", cryptoData)
+
             displayCryptoFav(cryptoData)
             return cryptoData
           })
@@ -302,11 +366,9 @@ function displayCryptoFav(cryptoData) {
   var cryptoFavInput = document.querySelector('#cryptoFav')
 
   var cryptoFavValue = cryptoFavInput.value
-  console.log(cryptoFavValue)
   var cryptoFavValueCaps = cryptoFavValue.toUpperCase()
 
   var cryptoFavResult = cryptoFavValueCaps + ":" + " " + cryptoData.data.rates[cryptoFavValueCaps]
-  console.log(cryptoFavResult);
   
   var cryptoList = document.querySelector("#favCryptoList")
   var favCryptoLi = document.createElement('li');
