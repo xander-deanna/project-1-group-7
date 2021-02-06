@@ -1,5 +1,11 @@
 var stocksListEl = document.getElementById("stocksList");
 
+
+
+
+
+
+init()
 stockIndex = []
 function getStock() {
 
@@ -88,79 +94,27 @@ function displayCrypto(cryptoData) {
     var featuredList = document.querySelector("#cryptoList")
     var featuredEl = document.createElement('li');
     featuredEl.textContent = topCrypto[i] + ":" + " " + featuredCurrency[topCrypto[i]];
-    // featuredEl.textContent = featuredCurrency.value
     featuredList.appendChild(featuredEl);
 
   }
-
-  /*// pulls item from topCrypto array
-  var topCryptoOneName = topCrypto[0]
-  console.log(topCryptoOneName)
-  //  pulls the current exchange rate from the data based on the currency abbreviation
-  var topCryptoOneRate = cryptoData.data.rates[topCrypto[0]]
-  console.log(topCryptoOneRate)
-
-  var topCryptoTwoName = topCrypto[1]
-  console.log(topCryptoTwoName)
-  var topCryptoTwoRate = cryptoData.data.rates[topCrypto[1]]
-  console.log(topCryptoTwoRate)
-
-  var topCryptoThreeName = topCrypto[2]
-  console.log(topCryptoThreeName)
-  var topCryptoThreeRate = cryptoData.data.rates[topCrypto[2]]
-  console.log(topCryptoThreeRate)
-
-  var topCryptoFourName = topCrypto[3]
-  console.log(topCryptoFourName)
-  var topCryptoFourRate = cryptoData.data.rates[topCrypto[3]]
-  console.log(topCryptoFourRate)
-
-  var topCryptoFiveName = topCrypto[4]
-  console.log(topCryptoFiveName)
-  var topCryptoFiveRate = cryptoData.data.rates[topCrypto[4]]
-  console.log(topCryptoFiveRate)
+}
 
 
-  // combines currency abbreviation and its current exchange rate
-  var trendingCryptoOne = [
-    topCryptoOneName + ":" + " " + topCryptoOneRate
-  ]
-  console.log(trendingCryptoOne);
-  // adds combined currency and rate to HTML
-  var firstFeature = document.querySelector("#featureone")
-  firstFeature.textContent = trendingCryptoOne;
+var cryptoFavSearch = document.querySelector("#cryptofav");
 
-  var trendingCryptoTwo = [
-    topCryptoTwoName + ":" + " " + topCryptoTwoRate
-  ]
-  console.log(trendingCryptoTwo);
-  var secondFeature = document.querySelector("#featuretwo")
-  secondFeature.textContent = trendingCryptoTwo;
+cryptoFavSearch.addEventListener('click', function(){
+  var cryptoList = document.querySelector("#cryptoList")
+  var favCryptoLi = document.createElement('li');
+  var favCryptoiEl = document.createElement('i')
+  // favCryptoiEl.setAttribute("id", "favCrypto")
+  favCryptoiEl.className ='far fa-star'
+  favCryptoiEl.textContent = cryptoList.value
+  favCryptoLi.appendChild(favCryptoiEl)
+  cryptoList.appendChild(favCryptoLi)
+})
 
-
-  var trendingCryptoThree = [
-    topCryptoThreeName + ":" + " " + topCryptoThreeRate
-  ]
-  console.log(trendingCryptoThree);
-  var thirdFeature = document.querySelector("#featurethree")
-  thirdFeature.textContent = trendingCryptoThree;
-
-
-  var trendingCryptoFour = [
-    topCryptoFourName + ":" + " " + topCryptoFourRate
-  ]
-  console.log(trendingCryptoFour);
-  var fourthFeature = document.querySelector("#featurefour")
-  fourthFeature.textContent = trendingCryptoFour;
-
-
-  var trendingCryptoFive = [
-    topCryptoFiveName + ":" + " " + topCryptoFiveRate
-  ]
-  console.log(trendingCryptoFive);
-  var fifthFeature = document.querySelector("#featurefive")
-  fifthFeature.textContent = trendingCryptoFive;*/
-
+function init(){
+  return $('#favsModal').foundation('open')
 
 
 }
