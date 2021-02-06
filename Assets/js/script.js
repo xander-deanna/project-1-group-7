@@ -192,7 +192,7 @@ cryptoFavSearch.addEventListener('click', function(){
   var favCryptoLi = document.createElement('li');
   var favCryptoiEl = document.createElement('i')
   // favCryptoiEl.setAttribute("id", "favCrypto")
-  favCryptoiEl.className ='far fa-star'
+  favCryptoiEl.className ='fa fa-star'
   favCryptoiEl.textContent = cryptoList.value
   favCryptoLi.appendChild(favCryptoiEl)
   cryptoList.appendChild(favCryptoLi)
@@ -202,48 +202,42 @@ cryptoFavSearch.addEventListener('click', function(){
 function saveStocks(symbolId){
   var found=false;
   var stockArray=[];
-  var addStock = {
-      symbol : symbolId,
-              };
-  var stockArray = JSON.parse(localStorage.getItem("stockSymbol") || "[]");
-  
-  console.log(stockArray);
-  // check for duplicate city name
+
+  if (JSON.parse(localStorage.getItem("stockFavorites"))) {
+    stockArray = JSON.parse(localStorage.getItem("stockFavorites"))
+  }
+
+  // check for duplicate symbol name
   for(var i=0; i < stockArray.length; i++){
-    
-    if(stockArray[i].city===symbolId){
+    if(stockArray[i] === symbolId){
       console.log(stockArray[i].symbol);
         found=true;
     }
-  }         
-  console.log("found", found);
+  }
+
   if(!found){
-    stockArray.push(addStock);
-    localStorage.setItem("stockSymbol", JSON.stringify(stockArray));
+    stockArray.push(symbolId);
+    localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
   }  
 }
 
 function saveCrypto(cryptoId){
   var found=false;
   var cryptoArray=[];
-  var addCrypto = {
-      crypto : cryptoId,
-              };
-  var cryptoArray = JSON.parse(localStorage.getItem("cryptoObj") || "[]");
-  
-  console.log(cryptoArray);
+
+  if (localStorage.getItem("cryptoFavorites")) cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"))
+
   // check for duplicate city name
   for(var i=0; i < cryptoArray.length; i++){
     
-    if(cryptoArray[i].city===cryptoId){
-      console.log(cryptoArray[i].crypto);
+    if(cryptoArray[i] === cryptoId){
         found=true;
     }
   }         
-  console.log("found", found);
+
   if(!found){
-    cryptoArray.push(addCrypto);
-    localStorage.setItem("cryptoObj", JSON.stringify(cryptoArray));
+    cryptoArray.push(cryptoId);
+    localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   }  
 }
 
