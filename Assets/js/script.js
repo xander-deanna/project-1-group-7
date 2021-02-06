@@ -6,18 +6,26 @@ let STKlst
 
 fetch('stocks.json').then(response => response.json()).then(data => STKlst = data)
 
-async function stockSearchHandler(event) {
-    let query = document.getElementById('newsSearch').nodeValue
-    let matches = STKgetSymbolSearch(query.replace(' ', ','))
+// Called on stock search button clicked
+// Populates stock list with results
+async function STKSearchHandler(event) {
+    let query = document.getElementById('stocksSearch').value
+    let matches = await STKgetSymbolSearch(query.replace(' ', ','))
     console.log(matches)
+    if (matches['bestMatches']) matches = matches['bestMatches']
+    for (let i in matches)   {
+        console.log(matches[i])
+    }
 }
 
+// Gets stocks that match search query
 async function STKgetSymbolSearch(keywords) {
     return await (
         await fetch(`${STKSearchURL}&keywords=${keywords}`)
     ).json()
 }
 
+// Get data for stock by symbol
 async function STKgetData(symbol, interval) {
     return await (
         await fetch(`${STKIntradayURL}&symbol=${symbol}&interval=${interval}`)
@@ -82,7 +90,7 @@ function getCrypto() {
 
 
 }
-getCrypto()
+//getCrypto()
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
 function displayCrypto(cryptoData) {
   
