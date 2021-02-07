@@ -32,12 +32,12 @@
     </header>
     <br>
 
-    <!-- all main content -->
+    <!-- all main page content -->
     <div class="row">
 
-      <!-- stocks box -->
+      <!-- Stocks Box -->
+      <!--------------------------------------------------------------------------------------->
       <div id="stocksBox" class= "medium-5 columns callout">
-
         <div id="stocksHead" class="text-center">
           <h4 id="stocksTitle" class= "boxTitle">Stocks Exchange Rates</h4>
           <p>Displayed in USD</p>
@@ -55,18 +55,15 @@
           <h6 id="boxTitle text-center" id="featuretitle">Search Results</h6>
           <ul id='stock-results-render-list'></ul>
         </div>
-
-        </table>
         <button id="clearBtnStocks" class="clearBtn button" type="button">Clear</button>
       </div>
-
-      <!-- empty div to maintain space between boxes -->
-      <div class= "empty medium-2 columns"></div>
+      
       <!-- crypto box-->
+      <!----------------------------------------------------------------------------------------->
       <div id="cryptoBox" class= "medium-5 columns callout">
         <div id="cryptoHead" class="text-center">
           <h4 id="cryptoTitle" class= "boxTitle">Crypto Exchange Rates</h4>
-          <p>Displayed in USD</p>
+          <p>Exchange rates displayed in reference to 1 USD</p>
           <span class="searchBox">
             <input id="cryptoSearch" type="search" class="search" placeholder="Search"></input>
             <button id="cryptoBtn" type="button" class="button">Search</button>
@@ -83,20 +80,60 @@
         <!-- crypto results list -->
         <h6 class= "boxTitle text-center" id="featuretitle">Featured Currency Rates</h6>
         <ul id="cryptoList">
-           <!-- <li><i class="far fa-star" id="btcfeature"></i></li> -->
         </ul>
         <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear</button>
       </div>
+
     </div>
-      <!-- error modal -->
+
+    <!-- error modal -->
+    <!----------------------------------------------------------------------------------------->
+    <div class="reveal" id="errorModal" data-reveal>
+      <h1 class= "alert">Error!</h1>
+      <p class="lead alert">Invalid Input. Please try your search again.</p>
+      <button class="close-button alert" data-close aria-label="Close modal" type="button">
+        <span class= "alert" aria-hidden="true">&times;</span>
+      </button>
+      <span id="favSearch" class= "alert" aria-hidden="true">
+        <button id="TryFavAgainBtn" type="button" class="button">Try Again</button>
+      </span>
+    </div>
+
+    <!-- favorites modal -->
+    <!----------------------------------------------------------------------------------------->
+    <div class="reveal" id="favsModal" data-reveal>
+      <h1 class= "alert">Welcome to Tradify</h1>
+      <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
+      <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
+
+      <!-- fav error modal -->
       <div class="reveal" id="errorModal" data-reveal>
         <h1 class= "alert">Error!</h1>
         <p class="lead alert">Invalid Input. Please try your search again.</p>
         <button class="close-button alert" data-close aria-label="Close modal" type="button">
           <span class= "alert" aria-hidden="true">&times;</span>
         </button>
+
         <span id="favSearch" class= "alert" aria-hidden="true">
-          <button id="TryFavAgainBtn" type="button" class="button">Try Again</button>
+          <input id="cryptoFav" type="search" class="search" placeholder="Enter Crypto Here"></input>
+          <button id="cryptoFavBtn" type="button" class="button">Add</button>
+          <input id="stockFav" type="search" class="search" placeholder="Enter Stocks Here"></input>
+          <button id="stockFavBtn" type="button" class="button">Add</button>
+        </span>
+
+    </div>
+
+      </div>
+
+       <!-- usersearch error modal -->
+       <div class="reveal" id="schErrorModal" data-reveal>
+        <h1 class= "alert">Error!</h1>
+        <p class="lead alert">Invalid Input. Please try your search again.</p>
+        <button class="close-button alert" data-close aria-label="Close modal" type="button">
+          <span class= "alert" aria-hidden="true">&times;</span>
+        </button>
+        <span id="favSearch" class= "alert" aria-hidden="true">
+          <button class="button" data-close aria-label="Close modal" id="schTryFavAgainBtn" type="button">Try Again</button>
         </span>
       </div>
 
@@ -114,7 +151,9 @@
       </div>
 
 
+
     <!-- javaScript for foundation css styling -->
+    <!----------------------------------------------------------------------------------------->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
     <script>
@@ -122,6 +161,7 @@
     </script>
 
     <!-- our javaScript-->
+    <!----------------------------------------------------------------------------------------->
     <script src="./Assets/js/script.js"></script>
 
   </body>
