@@ -47,22 +47,14 @@
           </span>
         </div>
 
-        <!-- stocks results table --> 
-        <table class='stock-table'>
-          <thead>
-            <tr>
-              <th>Symbol</th>
-              <th>Open</th>
-              <th>High</th>
-              <th>Low</th>
-              <th>Close</th>
-              <th>Volume</th>
-      
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody id="stock-render"></tbody>
+        <h6 class= "boxTitle text-center" id="favTitle">Favorite Stocks</h6>
+        <ul id="favorite-stocks-render"></ul>
+        <h6 class= "boxTitle text-center" id="featuretitle">Featured Stocks</h6>
+        <ul id="featured-stocks-render"></ul>
+        <div id="stock-results-render" class='text-center' style='display: none;'>
+          <h6 id="boxTitle text-center" id="featuretitle">Search Results</h6>
+          <ul id='stock-results-render-list'></ul>
+        </div>
 
         </table>
         <button id="clearBtnStocks" class="clearBtn button" type="button">Clear</button>
