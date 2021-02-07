@@ -5,12 +5,13 @@ let STKapiKey = 'U65M3D2LOCIOUFEM'
 let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey}`
 let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey}`
 
-var renderStockDiv=document.getElementById("render-stock");
+var renderStockDiv = document.getElementById("render-stock");
 var stocksListEl = document.getElementById("stocksList");
-var clearCryptoEl =document.getElementById("clearBtnCrypto");
-var clearStocksEl =document.getElementById("clearBtnStocks");
-var stockfavSearch =document.getElementById("stockFavBtn");
-function init(){
+var clearCryptoEl = document.getElementById("clearBtnCrypto");
+var clearStocksEl = document.getElementById("clearBtnStocks");
+var stockfavSearch = document.getElementById("stockFavBtn");
+
+function init() {
   return $('#favsModal').foundation('open')
 }
 
@@ -18,8 +19,9 @@ init()
 getCrypto()
 stockIndex = []
 
-var tryAgain = document.querySelector("#TryFavAgainBtn");
-tryAgain.addEventListener("click", function(){
+// When user inputs incorrect symbols to search for favs, returns them back to enter again. 
+var favTryAgain = document.querySelector("#TryFavAgainBtn");
+favTryAgain.addEventListener("click", function () {
   return $('#favsModal').foundation('open')
 });
 
@@ -28,14 +30,14 @@ var stocksSearchBtn = document.getElementById("stocksBtn")
 var cryptoSearchBtn = document.getElementById("cryptoBtn")
 
 //Stocks search event listener for main (index) page
-stocksSearchBtn.addEventListener("click", function(){
+stocksSearchBtn.addEventListener("click", function () {
   var stocksListEl = document.querySelector("#stocksList")
   stocksListEl = ""
   STKSearchHandler()
 });
 
 //Crypto search event listener for main (index) page
-cryptoSearchBtn.addEventListener("click", function(){
+cryptoSearchBtn.addEventListener("click", function () {
   var cryptoListEl = document.querySelector("#cryptoList")
   var featureTitle = document.querySelector("#featureTitle")
   cryptoListEl.textContent = " "
@@ -52,102 +54,102 @@ displayStocks([])
 // Called on stock search button clicked
 // Populates stock list with results
 async function STKSearchHandler(event) {
-    let query = document.getElementById('stocksSearch').value
-    let matches = await STKgetSymbolSearch(query.replace(' ', ','))
-    console.log(matches)
-    let stocks = []
-    for (let i in matches['bestMatches'])   {
-        stocks.push(
-            await STKgetData(matches['bestMatches'][i]['symbol'])
-        )
-    }
-    displayStocks(stocks)
+  let query = document.getElementById('stocksSearch').value
+  let matches = await STKgetSymbolSearch(query.replace(' ', ','))
+  console.log(matches)
+  let stocks = []
+  for (let i in matches['bestMatches']) {
+    stocks.push(
+      await STKgetData(matches['bestMatches'][i]['symbol'])
+    )
+  }
+  displayStocks(stocks)
 }
 
 // Gets stocks that match search query
 async function STKgetSymbolSearch(keywords) {
-    return await (
-        await fetch(`${STKSearchURL}&keywords=${keywords}`)
-    ).json()
+  return await (
+    await fetch(`${STKSearchURL}&keywords=${keywords}`)
+  ).json()
 
 }
 
 // Get data for stock by symbol
 async function STKgetData(symbol) {
-    return await (
-        await fetch(`${STKIntradayURL}&symbol=${symbol}`)
-    ).json()
+  return await (
+    await fetch(`${STKIntradayURL}&symbol=${symbol}`)
+  ).json()
 }
 
 // create table of stocks
 async function displayStocks(stocks) {
-    let favsSymbols = JSON.parse(localStorage.getItem('stockFavorites'))
-    let favs = []
-    for (let i in favsSymbols) {
-        favs.push(await STKgetData(favsSymbols[i]))
+  let favsSymbols = JSON.parse(localStorage.getItem('stockFavorites'))
+  let favs = []
+  for (let i in favsSymbols) {
+    favs.push(await STKgetData(favsSymbols[i]))
+  }
+  displayStockFavs(favs)
+
+  for (let i in stocks) {
+    let symbol = stocks[i]['Meta Data']['2. Symbol']
+    if (!favs.find(fav => fav == symbol)) { // if not a favorite
+      let row = document.createElement('tr')
+
+      row.appendChild(td(symbol))
+
+      let currentDayData = stocks[i]['Time Series (Daily)'][
+        Object.keys(stocks[i]['Time Series (Daily)'])[0]
+      ]
+      let previousDayData = stocks[i]['Time Series (Daily)'][
+        Object.keys(stocks[i]['Time Series (Daily)'])[1]
+      ]
+
+      // high, low, open, close
+      for (let field in currentDayData) {
+        row.appendChild(
+          td(parseFloat(currentDayData[field]).toFixed(2))
+        )
+      }
+
+      // change since last day
+      if (parseFloat(previousDayData['close']) < parseFloat(currentDayData['high'])) {
+        row.appendChild(
+          td('<i class="fa sort-down"></i>')
+        )
+      } else {
+        row.appendChild(
+          td('<i class="fa sort-up"></i>')
+        )
+      }
+
+      document.getElementById('stock-render').appendChild(row)
     }
-    displayStockFavs(favs)
-    
-    for (let i in stocks) {
-        let symbol = stocks[i]['Meta Data']['2. Symbol']
-        if (!favs.find(fav => fav == symbol)) { // if not a favorite
-            let row = document.createElement('tr')
-
-            row.appendChild(td(symbol))
-
-            let currentDayData = stocks[i]['Time Series (Daily)'][
-                Object.keys(stocks[i]['Time Series (Daily)'])[0]
-            ]
-            let previousDayData = stocks[i]['Time Series (Daily)'][
-                Object.keys(stocks[i]['Time Series (Daily)'])[1]
-            ]
-
-            // high, low, open, close
-            for (let field in currentDayData) {
-                row.appendChild(
-                    td(parseFloat(currentDayData[field]).toFixed(2))
-                )
-            }
-
-            // change since last day
-            if (parseFloat(previousDayData['close']) < parseFloat(currentDayData['high'])) {
-                row.appendChild(
-                    td('<i class="fa sort-down"></i>')
-                )
-            } else {
-                row.appendChild(
-                    td('<i class="fa sort-up"></i>')
-                )
-            }
-
-            document.getElementById('stock-render').appendChild(row)
-        }
-    }
+  }
 }
 
 
 async function displayStockFavs(favs) {
-    for (let i in favs) {
+  for (let i in favs) {
 
-    }
+  }
 }
 
-function td(content, className='') {
-    let td = document.createElement('td')
-    if (typeof content == 'string') {
-        td.innerHTML = `<td>${content}</td>`
-    } else {
-        td.appendChild(content)
-    }
-    td.className = className
-    return td
+function td(content, className = '') {
+  let td = document.createElement('td')
+  if (typeof content == 'string') {
+    td.innerHTML = `<td>${content}</td>`
+  } else {
+    td.appendChild(content)
+  }
+  td.className = className
+  return td
 }
 
 function favoriteIcon(className, symbol) {
-    let i = document.createElement('i')
-    i.className = className
-    i.addEventListener('click', (event) => updateStockFavs(event, symbol))
-    return i
+  let i = document.createElement('i')
+  i.className = className
+  i.addEventListener('click', (event) => updateStockFavs(event, symbol))
+  return i
 }
 // -------------------------------------------------------------------
 
@@ -194,7 +196,7 @@ function getCrypto() {
 
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
 function displayCrypto(cryptoData) {
-  
+
   // pulls current BTC rate
   var bitcoinPrice = cryptoData.data.rates.BTC
 
@@ -226,77 +228,77 @@ function displayCrypto(cryptoData) {
 
   }
 
-// -------------------------------------------------------------------
+  // -------------------------------------------------------------------
   // get fav crypto from local storage
-    renderCryptoLocalStorage(cryptoData); 
+  renderCryptoLocalStorage(cryptoData);
 }
 
 // Crypto favorite search 
 var cryptofavSearch = document.querySelector("#cryptoFavBtn");
-cryptofavSearch.addEventListener('click', function(){
+cryptofavSearch.addEventListener('click', function () {
   var favCryptoInput = document.querySelector("#cryptoFav")
 
-  if (favCryptoInput === null){
+  if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
   }
 
   getCryptoFav()
-  
+
 })
 
 // Stock Favorite Search
 
-stockfavSearch.addEventListener('click', function(){
+stockfavSearch.addEventListener('click', function () {
   var favStockInput = document.querySelector("#stockFav")
-  
-  if (favStockInput === null){
+
+  if (favStockInput === null) {
     return $('#errorModal').foundation('open')
   }
-  
+
   addStockFav()
 })
 
-  
-function saveStocks(symbolId){
-  var found=false;
-  var stockArray=[];
+
+function saveStocks(symbolId) {
+  var found = false;
+  var stockArray = [];
 
   if (JSON.parse(localStorage.getItem("stockFavorites"))) {
     stockArray = JSON.parse(localStorage.getItem("stockFavorites"))
   }
 
   // check for duplicate symbol name
-  for(var i=0; i < stockArray.length; i++){
-    if(stockArray[i] === symbolId){
-        found=true;
+  for (var i = 0; i < stockArray.length; i++) {
+    if (stockArray[i] === symbolId) {
+      found = true;
     }
   }
 
-  if(!found){
+  if (!found) {
     console.log("stocklocal", symbolId);
     stockArray.push(symbolId);
     localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-  }  
+  }
 }
 
-function saveCrypto(cryptoId){
-  var found=false;
-  var cryptoArray=[];
+function saveCrypto(cryptoId) {
+  var found = false;
+  var cryptoArray = [];
 
   if (localStorage.getItem("cryptoFavorites")) cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"))
 
   // check for duplicate city name
-  for(var i=0; i < cryptoArray.length; i++){
-    
-    if(cryptoArray[i] === cryptoId){
-        found=true;
-    }
-  }         
+  for (var i = 0; i < cryptoArray.length; i++) {
 
-  if(!found){
+    if (cryptoArray[i] === cryptoId) {
+      found = true;
+    }
+  }
+
+  if (!found) {
     cryptoArray.push(cryptoId);
     localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
-  }  
+  }
 }
 
 
@@ -331,8 +333,8 @@ function displayCryptoSearch(cryptoData) {
   var cryptoResult = cryptoSearchValueCaps + ":" + " " + cryptoData.data.rates[cryptoSearchValueCaps]
 
 
-  if(cryptoData.data.rates[cryptoSearchValueCaps] === undefined){
-    return $('#errorModal').foundation('open')
+  if (cryptoData.data.rates[cryptoSearchValueCaps] === undefined) {
+    return $('#schErrorModal').foundation('open')
   }
 
   var featuredList = document.querySelector("#cryptoList")
@@ -374,8 +376,8 @@ function displayCryptoFav(cryptoData) {
 
   var cryptoFavResult = cryptoFavValueCaps + ":" + " " + cryptoData.data.rates[cryptoFavValueCaps]
 
-  
-  if(cryptoData.data.rates[cryptoFavValueCaps] === undefined){
+
+  if (cryptoData.data.rates[cryptoFavValueCaps] === undefined) {
     return $('#errorModal').foundation('open')
   }
 
@@ -388,31 +390,31 @@ function displayCryptoFav(cryptoData) {
 
 }
 
-function renderCryptoLocalStorage(cryptoData){
-  var cryptoArray=[];
-    if (localStorage.cryptoFavorites){
-      
-      var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
-      console.log(cryptoArray.length);
-      for(var i=0; i < cryptoArray.length; i++){
-      
-          console.log(cryptoArray[i]);
-          var cryptoFavResult = cryptoArray[i] + ":" + " " + cryptoData.data.rates[cryptoArray[i]]
-          console.log(cryptoFavResult);
-          var cryptoList = document.querySelector("#favCryptoList")
-          var favCryptoLi = document.createElement('li');
-          favCryptoLi.textContent = cryptoFavResult
-          cryptoList.appendChild(favCryptoLi);
-          
-      }
+function renderCryptoLocalStorage(cryptoData) {
+  var cryptoArray = [];
+  if (localStorage.cryptoFavorites) {
+
+    var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
+    console.log(cryptoArray.length);
+    for (var i = 0; i < cryptoArray.length; i++) {
+
+      console.log(cryptoArray[i]);
+      var cryptoFavResult = cryptoArray[i] + ":" + " " + cryptoData.data.rates[cryptoArray[i]]
+      console.log(cryptoFavResult);
+      var cryptoList = document.querySelector("#favCryptoList")
+      var favCryptoLi = document.createElement('li');
+      favCryptoLi.textContent = cryptoFavResult
+      cryptoList.appendChild(favCryptoLi);
+
+    }
   }
 }
 
-clearCryptoEl.addEventListener("click", function(){
-  var cryptoArray=[];
+clearCryptoEl.addEventListener("click", function () {
+  var cryptoArray = [];
   var cryptoList = document.querySelector("#favCryptoList");
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
-  cryptoList.textContent="";
+  cryptoList.textContent = "";
 })
 
 
@@ -425,10 +427,10 @@ function addStockFav() {
   console.log(stockFavValueeCaps);
   saveStocks(stockFavValueeCaps);
 
-  
+
 }
-clearStocksEl.addEventListener("click", function(){
-  var stockArray=[];
+clearStocksEl.addEventListener("click", function () {
+  var stockArray = [];
   localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-  
+
 })
