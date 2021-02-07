@@ -56,7 +56,6 @@ ul {
     padding: 0px 0px 0px 0px;
     text-align: left;
     list-style-type: none;
-
 }
 li {
     margin: 0px 0px 0px 0px;
@@ -66,7 +65,7 @@ li {
     float: none;
 }
 
-/* Changes color for main content boxes */
+/* Changes color for main content boxes, adds border radius */
 .row {
     margin: auto;
     padding: 10px 20px 10px 20px;
@@ -106,8 +105,6 @@ li {
     display: inline-flex;
 }
 
-.search
-
 /* Up and down icon for crypto (if we want to use them) */
 /* <i class="fas fa-level-up-alt"></i> on fontawesome */
 .fa-level-up-alt {
@@ -121,7 +118,6 @@ li {
 .alert{
 color: rgb(3, 11, 82);
 border-color:rgb(241, 6, 6)
-
 }
 
 .stock-table thead {
