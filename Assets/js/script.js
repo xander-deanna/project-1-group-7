@@ -17,14 +17,17 @@ function init() {
 }
 
 init()
+
+
 getCrypto()
 stockIndex = []
-
 // When user inputs incorrect symbols to search for favs, returns them back to enter again. 
 var favTryAgain = document.querySelector("#TryFavAgainBtn");
 favTryAgain.addEventListener("click", function () {
   return $('#favsModal').foundation('open')
 });
+
+
 
 //Variables for search elements
 var stocksSearchBtn = document.getElementById("stocksBtn")
@@ -46,8 +49,43 @@ cryptoSearchBtn.addEventListener("click", function () {
 // Only display favorites
 displayStocks()
 
-
 // --------------------------- STOCKs ---------------------------------
+
+
+function displayStocksFeatured(symbol){
+  console.log(symbol);
+  var requestUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=U65M3D2LOCIOUFEM'  
+  console.log(requestUrl);
+
+  fetch(requestUrl )
+    .then(function (response) {
+      return response.json();
+     })
+
+    .then(function (data) {
+      console.log("Stock data ", data)
+      var StockFuture=(data['Time Series (Daily)']);
+      var objKeys=Object.keys(StockFuture);
+      var propOfFirstEntry=objKeys.shift();
+      console.log("propOfFirstEntry ",propOfFirstEntry);
+      var Stocktorender=StockFuture[propOfFirstEntry];
+      console.log("stock object ",Stocktorender);
+      var objValOpen=Number(lastStocktorender['1. open']).toFixed(2);
+      var objValhigh=Number(lastStocktorender['2. high']).toFixed(2);
+      var objValLow=Number(lastStocktorender['3. low']).toFixed(2);
+      var objValClose=Number(lastStocktorender['4. close']).toFixed(2);
+      var objValVolume=Number(lastStocktorender['5. volume']).toFixed(2);
+      var featuredstocksRenderEl =document.getElementById("featured-stocks-render");
+      var symbolli=document.createElement("li");
+      symbolli.classList.add("columns");
+      symbolli.textContent=objValhigh;
+      var favIcon=document.createElement("img");
+      favIcon.setAttribute("src", ""); 
+      symbolli.appendChild(favIcon);
+      featuredstocksRenderEl.append(symbolli);
+
+    });
+
 
 // Called on stock search button clicked
 // Populates stock list with results
@@ -102,7 +140,7 @@ async function displayStocks(stocks=null) {
         favs.push(await STKgetData(favsSymbols[i]))
     }
     displayStockFavs(favs)
-    //displayStockFeatured()
+    displayStockFeatured()
 
     if (!stocks) return
     
@@ -133,11 +171,8 @@ async function displayStocks(stocks=null) {
             row.innerHTML = `${symbol}: ${price} ${changeIcon}`
             document.getElementById('stock-results-render-list').appendChild(row)
         }
-
     }
   }
-
-
 
 async function displayStockFavs(favs) {
   let el = document.getElementById('favorite-stocks-render')
@@ -216,8 +251,8 @@ function displayCrypto(cryptoData) {
     featuredList.appendChild(featuredEl);
 
   }
-
   // -------------------------------------------------------------------
+
   // get fav crypto from local storage
   renderCryptoLocalStorage(cryptoData);
 }
