@@ -136,7 +136,7 @@ async function displayStocks(stocks=null) {
 
     }
   }
-}
+
 
 
 async function displayStockFavs(favs) {
