@@ -35,7 +35,7 @@
     <!-- all main page content -->
     <div class="row">
 
-      <!-- Stocks Box -->
+      <!-- stocks box -->
       <!--------------------------------------------------------------------------------------->
       <div id="stocksBox" class= "medium-5 columns callout">
         <div id="stocksHead" class="text-center">
@@ -47,17 +47,16 @@
           </span>
         </div>
 
+        <!-- stock favorite list -->
         <h6 class= "boxTitle text-center" id="favTitle">Favorite Stocks</h6>
-
-        <ul id="favorite-stocks-render"></ul>
-        <h6 class= "boxTitle text-center" id="featuretitle">Featured Stocks</h6>
-        <ul id="featured-stocks-render"></ul>
-        <div id="stock-results-render" class='text-center' style='display: none;'>
-          <h6 id="boxTitle text-center" id="featuretitle">Search Results</h6>
-          <ul id='stock-results-render-list'></ul>
-        </div>
-        <button id="clearBtnStocks" class="clearBtn button" type="button">Clear</button>
-
+        <ul id="favStocksList">
+        </ul>
+        <br>
+                
+        <!-- stocks results list -->
+        <h6 class= "boxTitle text-center" id="featuretitle">Featured Stock Prices</h6>
+        <ul id="stocksList"></ul>
+        <button id="clearBtnStocks" class="clearBtn button" type="button">Clear Favorites</button>
       </div>
       
       <!-- crypto box-->
@@ -107,11 +106,11 @@
       <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
       <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
       <span id="favSearch" class= "alert" aria-hidden="true">
-        <input id="cryptoFav" type="search" class="search" placeholder="Enter Crypto Here"></input>
-        <button id="cryptoFavBtn" type="button" class="button">Add</button>
         <input id="stockFav" type="search" class="search" placeholder="Enter Stocks Here"></input>
         <button id="stockFavBtn" type="button" class="button">Add</button>
-        </span>
+        <input id="cryptoFav" type="search" class="search" placeholder="Enter Crypto Here"></input>
+        <button id="cryptoFavBtn" type="button" class="button">Add</button>
+      </span>
     </div>
 
     <!-- favorites error modal -->
