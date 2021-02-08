@@ -54,7 +54,7 @@ displayStocks()
 
 
 function displayStocksFeatured(){
-  var stocksymbol=["AMZN", "IBM","DIS"]
+  var stocksymbol=["AMZN", "IBM","DIS", "MSFT", "CVX", "XOM", "TWTR", "FB", "ORCL"]
   // randomly selects one stock to be displayed
   var symbolIndex = Math.floor(Math.random() * stocksymbol.length);
   
@@ -176,6 +176,8 @@ async function displayStocks(stocks=null) {
             document.getElementById('stock-results-render-list').appendChild(row)
         }
     }
+
+    
   }
 
 async function displayStockFavs(favs) {
@@ -285,6 +287,7 @@ stockfavSearch.addEventListener('click', function () {
   }
 
   addStockFav()
+ 
 })
 
 
@@ -461,5 +464,6 @@ function addStockFav() {
 clearStocksEl.addEventListener("click", function () {
   var stockArray = [];
   localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-
+  var stocksLi = document.querySelector("#favStocksList");
+  stocksLi.textContent = "";
 })
