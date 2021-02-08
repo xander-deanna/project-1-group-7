@@ -79,7 +79,7 @@ function displayStocksFeatured(){
       var objValhigh=Number(Stocktorender['2. high']).toFixed(2);
       var objValLow=Number(Stocktorender['3. low']).toFixed(2);
       var objValClose=Number(Stocktorender['4. close']).toFixed(2);
-      var featuredstocksRenderEl =document.getElementById("featured-stocks-render");
+      var featuredstocksRenderEl =document.getElementById("stocksList");
       var symbolli=document.createElement("li");
         symbolli.classList.add("columns");
         symbolli.textContent=stocksymbol[symbolIndex] + ": " + objValhigh;
@@ -179,7 +179,7 @@ async function displayStocks(stocks=null) {
   }
 
 async function displayStockFavs(favs) {
-  let el = document.getElementById('favorite-stocks-render')
+  let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
     el.innerHTML = '<p>There are no favorite stocks selected</p>'
     return
