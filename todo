@@ -1,4 +1,3 @@
-ensure no duplicate favorites are stored
+ensure no duplicate stock favorites are stored
 ensure no incorrect stock favorites are entered
-make crypto search make sense
 display little bloop when add is clicked

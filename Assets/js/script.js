@@ -10,9 +10,6 @@ function STKapiKey() {
 function STKIntradayURL() {
   return `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey()}`
 }
-function STKSearchURL()  {
-  return `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey()}`
-}
 
 let stocksList = []
 fetch('stocks.json').then(r => r.json()).then(d => stocksList = d)
@@ -21,7 +18,7 @@ fetch('stocks.json').then(r => r.json()).then(d => stocksList = d)
 document.querySelector("#TryFavAgainBtn").addEventListener("click", () => $('#favsModal').foundation('open'))
 
 //Stocks search event listener for main (index) page
-document.getElementById("stocksBtn").addEventListener("click", STKSearchHandler)
+document.getElementById("stocksBtn").addEventListener("click", STKdisplaySearch)
 
 //Crypto search event listener for main (index) page
 document.getElementById("cryptoBtn").addEventListener("click", function () {
@@ -31,11 +28,99 @@ document.getElementById("cryptoBtn").addEventListener("click", function () {
 })
 
 // Only display favorites
-STKdisplay()
+STKdisplayAll()
 getCrypto()
 $('#favsModal').foundation('open')
 
 // --------------------------- STOCKs ---------------------------------
+// Called on stock search button clicked
+// Populates stock list with results
+// Get data for stock by symbol
+async function STKgetData(symbol) {
+    let results = await (
+        await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
+    ).json()
+    let i = 0
+    while (results['Note'] || i == 25) {
+      results = await (
+        await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
+      )
+      i++
+    }
+    if (results['Error Message']) {
+      console.log('BAD QUERY')
+      console.log(results)
+      return false
+    }
+    return results
+}
+
+// display all stocks
+async function STKdisplayAll() {
+  STKdisplayFavs()
+  STKdisplayFeatured()
+}
+
+async function STKdisplaySearch() {
+  let query = document.getElementById('stocksSearch').value
+  if (query == '') return
+  let stock = (
+    await STKgetData(query)
+  )
+  console.log(stock)
+  if (!stock) {
+    return $('#errorModal').foundation('open')
+  }
+
+  document.getElementById('stock-results-render').style.display = 'block'
+  document.getElementById('stock-results-render-list').innerHTML = ''
+
+  let symbol = searchStock['Meta Data']['2. Symbol']
+  if (!favs.find(fav => fav == symbol)) { // if not a favorite
+    let row = document.createElement('ul')
+
+    let currentDayData = searchStock['Time Series (Daily)'][
+        Object.keys(searchStock['Time Series (Daily)'])[0]
+    ]
+    let previousDayData = searchStock['Time Series (Daily)'][
+        Object.keys(searchStock['Time Series (Daily)'])[1]
+    ]
+
+    let price = currentDayData['2. high']
+    let changeIcon
+
+    // change since last day
+    if (parseFloat(previousDayData['4. close']) < parseFloat(currentDayData['2. high'])) {
+        changeIcon = '<i class="fa fa-sort-down"></i>'
+    } else {
+        changeIcon = '<i class="fa fa-sort-up"></i>'
+    }
+    row.innerHTML = `${symbol}: ${price} ${changeIcon}`
+    document.getElementById('stock-results-render-list').appendChild(row)
+  }
+}
+
+async function STKdisplayFavs() {
+  let favsSymbols = JSON.parse(localStorage.getItem('stockFavorites'))
+  let favs = []
+  for (let i in favsSymbols) {
+    let res = await STKgetData(favsSymbols[i])
+    if (res) favs.push(res)
+  }
+  let el = document.getElementById('favStocksList')
+  if (!favs || !favs[0]) {
+    el.innerHTML = '<p>There are no favorite stocks selected</p>'
+    return
+  }
+  el.innerHTML = ''
+  for (let i in favs) {
+    let currentDayData = favs[i]['Time Series (Daily)'][
+      Object.keys(favs[i]['Time Series (Daily)'])[0]
+    ]
+    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']}</ul>`
+  }
+}
+
 async function STKdisplayFeatured(){
   var featured = ["AMZN", "IBM","DIS", "MSFT", "CVX", "XOM", "TWTR", "FB", "ORCL"]
   // randomly selects one stock to be displayed
@@ -71,98 +156,6 @@ async function STKdisplayFeatured(){
 
   symbolli.appendChild(iconEl);
   featuredstocksRenderEl.append(symbolli);
-  }
-
-// Called on stock search button clicked
-// Populates stock list with results
-async function STKSearchHandler(event) {
-    let query = document.getElementById('stocksSearch').value
-    if (query == '') return
-    let stock = (
-      await STKgetData(query)
-    )
-    console.log(stock)
-    if (!stock) {
-      return $('#errorModal').foundation('open')
-    }
-    STKdisplay(stock)
-}
-
-// Get data for stock by symbol
-async function STKgetData(symbol) {
-    let results = await (
-        await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
-    ).json()
-    let i = 0
-    while (results['Note'] || i == 25) {
-      results = await (
-        await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
-      )
-      i++
-    }
-    if (results['Error Message']) {
-      console.log('BAD QUERY')
-      console.log(results)
-      return false
-    }
-    return results
-}
-
-// create table of stocks
-async function STKdisplay(searchStock=null) {
-    let favsSymbols = JSON.parse(localStorage.getItem('stockFavorites'))
-    let favs = []
-    for (let i in favsSymbols) {
-      let res = await STKgetData(favsSymbols[i])
-      if (res) favs.push(res)
-    }
-    STKdisplayFavs(favs)
-    STKdisplayFeatured()
-
-    if (!searchStock || (searchStock instanceof MouseEvent)) return
-    
-    // if searchStock have been passed, render search results
-    document.getElementById('stock-results-render').style.display = 'block'
-    document.getElementById('stock-results-render-list').innerHTML = ''
-
-    let symbol = searchStock['Meta Data']['2. Symbol']
-    if (!favs.find(fav => fav == symbol)) { // if not a favorite
-        let row = document.createElement('ul')
-
-        let currentDayData = searchStock['Time Series (Daily)'][
-            Object.keys(searchStock['Time Series (Daily)'])[0]
-        ]
-        let previousDayData = searchStock['Time Series (Daily)'][
-            Object.keys(searchStock['Time Series (Daily)'])[1]
-        ]
-
-        let price = currentDayData['2. high']
-        let changeIcon
-
-        // change since last day
-        if (parseFloat(previousDayData['4. close']) < parseFloat(currentDayData['2. high'])) {
-            changeIcon = '<i class="fa fa-sort-down"></i>'
-        } else {
-            changeIcon = '<i class="fa fa-sort-up"></i>'
-        }
-        row.innerHTML = `${symbol}: ${price} ${changeIcon}`
-        document.getElementById('stock-results-render-list').appendChild(row)
-    }
-  }
-
-async function STKdisplayFavs(favs) {
-  let el = document.getElementById('favStocksList')
-  if (!favs || !favs[0]) {
-    el.innerHTML = '<p>There are no favorite stocks selected</p>'
-    return
-  }
-  el.innerHTML = ''
-  for (let i in favs) {
-    let currentDayData = favs[i]['Time Series (Daily)'][
-      Object.keys(favs[i]['Time Series (Daily)'])[0]
-    ]
-    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']}</ul>`
-  }
 }
 // -------------------------------------------------------------------
 
@@ -247,7 +240,6 @@ document.getElementById("stockFavBtn").addEventListener('click', function () {
   }
 
   addStockFav()
- 
 })
 
 
@@ -405,16 +397,13 @@ document.getElementById("clearBtnCrypto").addEventListener("click", function () 
   cryptoList.textContent = "";
 })
 
-
 function addStockFav() {
   var stockFavInput = document.querySelector('#stockFav');
-
   var stockFavValue = stockFavInput.value;
   var stockFavValueeCaps = stockFavValue.toUpperCase();
   saveStocks(stockFavValueeCaps);
-
-
 }
+
 document.getElementById("clearBtnStocks").addEventListener("click", function () {
   var stockArray = [];
   localStorage.setItem("stockFavorites", JSON.stringify(stockArray));

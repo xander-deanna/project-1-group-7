@@ -27,6 +27,7 @@
           </ul>
         </div>
         <div class="top-bar-right">
+          <button><i class="fas fa-star"></i></button>
         </div>
       </div>
     </header>
@@ -51,6 +52,8 @@
         <h6 class= "boxTitle text-center" id="favTitle">Favorite Stocks</h6>
         <ul id="favStocksList">
         </ul>
+        <button id="clearBtnStocks" class="clearBtn button" type="button">Clear Favorites</button>
+        <br>
         <br>
       
         <!-- stock featured -->
@@ -63,7 +66,6 @@
           <h6>Search Results</h6>
           <ul id="stock-results-render-list"></ul>
         </div>
-        <button id="clearBtnStocks" class="clearBtn button" type="button">Clear Favorites</button>
       </div>
       
       <!-- crypto box-->
@@ -83,13 +85,14 @@
         <ul id="favCryptoList">
            <li id="btcfeature"></li>
         </ul>
+        <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear Favorites</button>
+        <br>
         <br>
         
         <!-- crypto results list -->
         <h6 class= "boxTitle text-center" id="featuretitle">Featured Currency Rates</h6>
         <ul id="cryptoList">
         </ul>
-        <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear Favorites</button>
       </div>
     </div>
 
@@ -108,8 +111,8 @@
 
     <!-- favorites modal -->
     <!----------------------------------------------------------------------------------------->
-    <div class="reveal" id="favsModal" data-reveal stlye="display: none;">
-      <h1 class= "alert">Welcome to Tradify</h1>
+    <div class="reveal" id="favsModal" data-reveal>
+      <h1 class= "alert"></h1>
       <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
       <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
       <p class='added-bloop' id="added-bloop">Added!</p>
