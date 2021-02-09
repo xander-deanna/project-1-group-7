@@ -14,14 +14,21 @@ var stocksListEl = document.getElementById("stocksList");
 var clearCryptoEl = document.getElementById("clearBtnCrypto");
 var clearStocksEl = document.getElementById("clearBtnStocks");
 var stockfavSearch = document.getElementById("stockFavBtn");
+
 var stockFavTitle = document.querySelector("#stockFavTitle");
 var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
 
-function init() {
-  return $('#favsModal').foundation('open')
-}
+var favMenuBtnEL = document.getElementById("favsModalBtn");
 
-init()
+
+
+favMenuBtnEL.addEventListener("click", function ()  {
+  return $('#favsModal').foundation('open')
+});
+
+// function init() {
+//   return $('#favsModal').foundation('open')
+// }
 
 
 getCrypto()
@@ -267,11 +274,9 @@ cryptofavSearch.addEventListener('click', function () {
   if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
   }
-  var favAddedConfirm = document.createElement('p');
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
   favAddedConfirm.textContent = "Added to Favorites!"
-  favAddedConfirm.className = 'favConfirm'
-  leadAlert.appendChild(favAddedConfirm)
-
   getCryptoFav()
 
 })
@@ -285,10 +290,10 @@ stockfavSearch.addEventListener('click', function () {
   if (favStockInput === null) {
     return $('#errorModal').foundation('open')
   }
-  var favAddedConfirm = document.createElement('p');
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
   favAddedConfirm.textContent = "Added to Favorites!"
-  favAddedConfirm.className = 'favConfirm'
-  leadAlert.appendChild(favAddedConfirm)
+
   addStockFav()
  
 })
