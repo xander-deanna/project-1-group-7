@@ -438,8 +438,8 @@ function displayCryptoFav(cryptoData) {
 function renderCryptoLocalStorage(cryptoData) {
   var cryptoArray = [];
   if (localStorage.cryptoFavorites) {
-    var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
-    cryptoFavTitle.textContent = "Favorite Currencies";
+    // var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
+    // cryptoFavTitle.textContent = "Favorite Currencies";
     var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
     for (var i = 0; i < cryptoArray.length; i++) {
 
@@ -454,6 +454,7 @@ function renderCryptoLocalStorage(cryptoData) {
   } 
   
   if (!cryptoArray || !cryptoArray[0]){
+     
      let el = document.getElementById('favCryptoList')
      el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
      clearCryptoEl.style.display = "none";
