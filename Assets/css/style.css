@@ -10,6 +10,9 @@ h4, p, i {
 th, td {
     color: #000000;
 }
+.favConfirm {
+    color: #000000;
+}
 
 /* Changes font for the logo */
 .logo {
@@ -95,7 +98,6 @@ li {
     background-color: #4e3f98;
 }
 .clearBtn {
-    float: right;
     margin: 5px 5px 5px 5px;
 }
 .search {
@@ -104,6 +106,9 @@ li {
     height: 40px;
     width: 150px;
     display: inline-flex;
+}
+.hideBtn{
+    display: none!important;
 }
 
 /* Up and down icon for crypto (if we want to use them) */
