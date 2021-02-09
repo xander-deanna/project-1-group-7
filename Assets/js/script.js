@@ -270,7 +270,6 @@ function displayCrypto(cryptoData) {
 var cryptofavSearch = document.querySelector("#cryptoFavBtn");
 cryptofavSearch.addEventListener('click', function () {
   var favCryptoInput = document.querySelector("#cryptoFav")
-  var leadAlert = document.querySelector("#leadAlert")
   if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
   }
@@ -281,9 +280,7 @@ cryptofavSearch.addEventListener('click', function () {
 
 })
 
-// let stockfavSearch = document.getElementById('stockFavBtn')
 // Stock Favorite Search
-
 stockfavSearch.addEventListener('click', function () {
   var favStockInput = document.querySelector("#stockFav")
 
