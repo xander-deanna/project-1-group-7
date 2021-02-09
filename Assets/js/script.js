@@ -263,11 +263,9 @@ cryptofavSearch.addEventListener('click', function () {
   if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
   }
-  var favAddedConfirm = document.createElement('p');
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
   favAddedConfirm.textContent = "Added to Favorites!"
-  favAddedConfirm.className = 'favConfirm'
-  leadAlert.appendChild(favAddedConfirm)
-
   getCryptoFav()
 
 })
@@ -281,10 +279,10 @@ stockfavSearch.addEventListener('click', function () {
   if (favStockInput === null) {
     return $('#errorModal').foundation('open')
   }
-  var favAddedConfirm = document.createElement('p');
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
   favAddedConfirm.textContent = "Added to Favorites!"
-  favAddedConfirm.className = 'favConfirm'
-  leadAlert.appendChild(favAddedConfirm)
+
   addStockFav()
  
 })
