@@ -54,13 +54,13 @@ displayStocks()
 
 
 function displayStocksFeatured(){
-  var stocksymbol=["AMZN", "IBM","DIS"]
+  var stocksymbol=["AMZN", "IBM","DIS", "MSFT", "CVX", "XOM", "TWTR", "FB", "ORCL"]
   // randomly selects one stock to be displayed
   var symbolIndex = Math.floor(Math.random() * stocksymbol.length);
   
   console.log(stocksymbol[symbolIndex]);
   var requestUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stocksymbol[symbolIndex] + '&apikey=U65M3D2LOCIOUFEM'  
-                    // 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo
+                    
   console.log(requestUrl);
   fetch(requestUrl )
     .then(function (response) {
@@ -79,13 +79,29 @@ function displayStocksFeatured(){
       var objValhigh=Number(Stocktorender['2. high']).toFixed(2);
       var objValLow=Number(Stocktorender['3. low']).toFixed(2);
       var objValClose=Number(Stocktorender['4. close']).toFixed(2);
-      var featuredstocksRenderEl =document.getElementById("featured-stocks-render");
+      var featuredstocksRenderEl =document.getElementById("stocksList");
+      // get previous day stock
+      var StockToenderSecondEntry=(data['Time Series (Daily)'][Object.keys(StockFuture)[1]]);
+      console.log("propOfSecondEntry ",[Object.keys(StockFuture)[1]]);
+      console.log("StockToenderSecondEntry ",StockToenderSecondEntry);
+      var objValpreviousDayClose=Number(StockToenderSecondEntry['4. close']).toFixed(2);
       var symbolli=document.createElement("li");
-        symbolli.classList.add("columns");
-        symbolli.textContent=stocksymbol[symbolIndex] + ": " + objValhigh;
-        var favIcon=document.createElement("img");
-        favIcon.setAttribute("src", ""); 
-        symbolli.appendChild(favIcon);
+
+          symbolli.textContent=stocksymbol[symbolIndex] + ": " + objValhigh;
+      // add icon based on the change in price
+      var iconEl=document.createElement("a");
+      // change since last day
+      console.log("high value current ",objValhigh);
+      console.log("close value previous ",objValpreviousDayClose);
+      if (parseFloat(objValpreviousDayClose) < parseFloat(objValhigh)) {
+        iconEl.classList.add("fa", "fa-sort-down");
+        
+      } else {
+        iconEl.classList.add("fa", "fa-sort-up");
+        
+      }
+
+        symbolli.appendChild(iconEl);
         featuredstocksRenderEl.append(symbolli);
 
     });
@@ -176,10 +192,12 @@ async function displayStocks(stocks=null) {
             document.getElementById('stock-results-render-list').appendChild(row)
         }
     }
+
+    
   }
 
 async function displayStockFavs(favs) {
-  let el = document.getElementById('favorite-stocks-render')
+  let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
     el.innerHTML = '<p>There are no favorite stocks selected</p>'
     return
@@ -285,6 +303,7 @@ stockfavSearch.addEventListener('click', function () {
   }
 
   addStockFav()
+ 
 })
 
 
@@ -461,5 +480,6 @@ function addStockFav() {
 clearStocksEl.addEventListener("click", function () {
   var stockArray = [];
   localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-
+  var stocksLi = document.querySelector("#favStocksList");
+  stocksLi.textContent = "";
 })
