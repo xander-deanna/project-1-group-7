@@ -22,12 +22,12 @@
       <div class="top-bar">
         <div class="top-bar-left">
           <ul class="menu">
-            <li><a class="logo" href="#"><i class="fas fa-coins"></i>
+            <li><a class="logo" href="https://xander-deanna.github.io/project-1-group-7/"><i class="fas fa-coins"></i>
               tradify.io</a></li>
           </ul>
         </div>
         <div class="top-bar-right">
-          <button><i class="fas fa-star"></i></button>
+          <button class="favsModal"><i class="fas fa-star favMenuBtn"></i></button>
         </div>
       </div>
     </header>
@@ -72,7 +72,7 @@
       <!----------------------------------------------------------------------------------------->
       <div id="cryptoBox" class= "medium-5 columns callout">
         <div id="cryptoHead" class="text-center">
-          <h4 id="cryptoTitle" class= "boxTitle">Crypto/Forex Exchange Rates</h4>
+          <h4 id="cryptoTitle" class= "boxTitle">Crypto Exchange Rates</h4>
           <p>Exchange rates displayed in reference to 1 USD</p>
           <span class="searchBox">
             <input id="cryptoSearch" type="search" class="search" placeholder="Search"></input>
@@ -81,8 +81,10 @@
         </div>
 
         <!-- crypto favorite list -->
-        <h6 class= "boxTitle text-center" id="cryptoFavTitle"></h6>
-        <ul id="favCryptoList"></ul>
+        <h6 class= "boxTitle text-center" id="stockFavTitle">Favorite Crypto</h6>
+        <ul id="favCryptoList">
+           <li id="btcfeature"></li>
+        </ul>
         <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear Favorites</button>
         <br>
         <br>
@@ -110,12 +112,16 @@
     <!-- favorites modal -->
     <!----------------------------------------------------------------------------------------->
     <div class="reveal" id="favsModal" data-reveal>
-
+      <h1 class="logo2"><i class="fas fa-coins favIconModal"></i> tradify.io favorites </i></h1>
       <h1 class= "alert"></h1>
+
       <p class="lead alert" id="leadAlert">Enter your favorite Stock, Crypto, or Forex Codes
         <p class="favConfirm" id="favConfirm">
         </p>
       </p>
+
+
+     
 
       <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
       <span id="favSearch" class= "alert" aria-hidden="true">
