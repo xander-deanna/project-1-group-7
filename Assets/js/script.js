@@ -9,8 +9,8 @@ function STKapiKey() {
 function STKIntradayURL() {
   return `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey()}`
 }
-let stocksList = []
-fetch('stocks.json').then(r => r.json()).then(d => stocksList = d)
+let validStocks = []
+fetch('stocks.json').then(r => r.json()).then(d => validStocks = d)
 
 // when user clicks the button, open the favorites add modal
 document.getElementById("favsModalBtn").addEventListener("click", function () {
@@ -23,7 +23,7 @@ document.querySelector("#TryFavAgainBtn").addEventListener("click", function() {
 })
 
 //Stocks search event listener for main (index) page
-document.getElementById("stocksBtn").addEventListener("click", STKdisplaySearch)
+document.getElementById("stocksBtn").addEventListener("click", STKdisplaySearchResults)
 
 //Crypto search event listener for main (index) page
 document.getElementById("cryptoBtn").addEventListener("click", function () {
@@ -33,54 +33,34 @@ document.getElementById("cryptoBtn").addEventListener("click", function () {
 })
 
 // Stock Favorite Search
-document.getElementById("stockFavBtn").addEventListener('click', function() {
-  var favAddedConfirm = document.querySelector('#favConfirm');
-  favAddedConfirm.textContent=""
-  favAddedConfirm.textContent = "Added to Favorites!"
-  // hide
-  setTimeout(() => favAddedConfirm.textContent = '', 500)
-  addStockFav()
-})
+document.getElementById("stockFavBtn").addEventListener('click', addStockFav)
 
 // Crypto favorite search 
-document.querySelector("#cryptoFavBtn").addEventListener('click', function () {
+document.querySelector("#cryptoFavBtn").addEventListener('click', getCryptoFav)
+
+document.getElementById('favsModal').addEventListener('click', function() {
+  console.log('click')
+})
+
+// display added to favorites if correct
+function displayAddedMessage() {
   var favAddedConfirm = document.querySelector('#favConfirm');
   favAddedConfirm.textContent=""
   favAddedConfirm.textContent = "Added to Favorites!"
   // hide
-  setTimeout(() => favAddedConfirm.textContent = '', 500)
-  getCryptoFav()
-})
+  setTimeout(() => favAddedConfirm.textContent = '', 1000)
+}
 
+// clear favs handlers
+document.getElementById("clearBtnCrypto").addEventListener("click", clearCryptoFavs)
 
-document.getElementById("clearBtnCrypto").addEventListener("click", function () {
-  var cryptoArray = [];
-  var cryptoList = document.querySelector("#favCryptoList");
-  localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
-  cryptoList.textContent = "";
-  this.style.display = "none";
-  let el = document.getElementById('favCryptoList')
-  el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
-})
-
-document.getElementById("clearBtnStocks").addEventListener("click", function () {
-  var stockArray = [];
-  localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-  var stocksLi = document.querySelector("#favStocksList");
-  stocksLi.textContent = "";
-  this.style.display = "none";
-  let el = document.getElementById('favStocksList')
-  el.innerHTML = '<p>There are no favorite stocks selected</p>'
-  clearStocksEl.style.display = "none";
-})
+document.getElementById("clearBtnStocks").addEventListener("click", clearStockFavs)
 
 // Only display favorites
 getCrypto()
+STKdisplayAll()
 $('#favsModal').foundation('open')
 // -------------------------------------------------------------------
-
-
-
 
 
 
@@ -112,9 +92,10 @@ async function STKgetData(symbol) {
     while (results['Note'] || i == 25) {
       results = await (
         await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
-      )
+      ).json()
       i++
     }
+    if (i == 25) console.log('OUT OF API CALLS')
     if (results['Error Message']) {
       console.log('BAD QUERY')
       console.log(results)
@@ -129,14 +110,14 @@ async function STKdisplayAll() {
   STKdisplayFeatured()
 }
 
-async function STKdisplaySearch() {
+async function STKdisplaySearchResults() {
   let query = document.getElementById('stocksSearch').value
   if (query == '') return
-  let stock = (
+  let searchStock = (
     await STKgetData(query)
   )
-  console.log(stock)
-  if (!stock) {
+  console.log(searchStock)
+  if (!searchStock) {
     return $('#errorModal').foundation('open')
   }
 
@@ -144,28 +125,26 @@ async function STKdisplaySearch() {
   document.getElementById('stock-results-render-list').innerHTML = ''
 
   let symbol = searchStock['Meta Data']['2. Symbol']
-  if (!favs.find(fav => fav == symbol)) { // if not a favorite
-    let row = document.createElement('ul')
+  let row = document.createElement('ul')
 
-    let currentDayData = searchStock['Time Series (Daily)'][
-        Object.keys(searchStock['Time Series (Daily)'])[0]
-    ]
-    let previousDayData = searchStock['Time Series (Daily)'][
-        Object.keys(searchStock['Time Series (Daily)'])[1]
-    ]
+  let currentDayData = searchStock['Time Series (Daily)'][
+      Object.keys(searchStock['Time Series (Daily)'])[0]
+  ]
+  let previousDayData = searchStock['Time Series (Daily)'][
+      Object.keys(searchStock['Time Series (Daily)'])[1]
+  ]
 
-    let price = currentDayData['2. high']
-    let changeIcon
+  let price = currentDayData['2. high']
+  let changeIcon
 
-    // change since last day
-    if (parseFloat(previousDayData['4. close']) < parseFloat(currentDayData['2. high'])) {
-        changeIcon = '<i class="fa fa-sort-down"></i>'
-    } else {
-        changeIcon = '<i class="fa fa-sort-up"></i>'
-    }
-    row.innerHTML = `${symbol}: ${price} ${changeIcon}`
-    document.getElementById('stock-results-render-list').appendChild(row)
+  // change since last day
+  if (parseFloat(previousDayData['4. close']) < parseFloat(currentDayData['2. high'])) {
+      changeIcon = '<i class="fa fa-sort-down"></i>'
+  } else {
+      changeIcon = '<i class="fa fa-sort-up"></i>'
   }
+  row.innerHTML = `${symbol.toUpperCase()}: ${price} ${changeIcon}`
+  document.getElementById('stock-results-render-list').appendChild(row)
 }
 
 async function STKdisplayFavs() {
@@ -178,7 +157,7 @@ async function STKdisplayFavs() {
   let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
     el.innerHTML = '<p>There are no favorite stocks selected</p>'
-    clearStocksEl.style.display = "none";
+    document.getElementById('clearBtnStocks').style.display = "none";
     return
   }
   el.innerHTML = ''
@@ -246,11 +225,28 @@ function addStockFav() {
     }
   }
 
+  // check if symbol is valid
+  if (!validStocks.find(stock => stock['ticker'] == symbolId)) return $('#errorModal').foundation('open')
+
   if (!found) {
     stockArray.push(symbolId);
+    displayAddedMessage()
     localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
+    STKdisplayFavs()
   }
 }
+
+function clearStockFavs() {
+  var stockArray = [];
+  localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
+  var stocksLi = document.querySelector("#favStocksList");
+  stocksLi.textContent = "";
+  this.style.display = "none";
+  let el = document.getElementById('favStocksList')
+  el.innerHTML = '<p>There are no favorite stocks selected</p>'
+  document.getElementById('clearBtnStocks').style.display = "none";
+}
+
 // -------------------------------------------------------------------
 
 
@@ -337,7 +333,7 @@ function saveCrypto(cryptoId) {
     cryptoArray.push(cryptoId);
     localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   }
-  clearCryptoEl.style.display = "block";
+  document.getElementById('clearBtnCrypto').style.display = "block";
 }
 
 
@@ -399,7 +395,7 @@ function getCryptoFav() {
             }
 
             displayCryptoFav(cryptoData)
-
+            displayAddedMessage()
             return cryptoData
           })
 
@@ -451,10 +447,21 @@ function renderCryptoLocalStorage(cryptoData) {
   if (!cryptoArray || !cryptoArray[0]){
      let el = document.getElementById('favCryptoList')
      el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
-     clearCryptoEl.style.display = "none";
+     document.getElementById('clearBtnCrypto').style.display = "none";
   }
      
  
 }
+
+function clearCryptoFavs() {
+  var cryptoArray = [];
+  var cryptoList = document.querySelector("#favCryptoList");
+  localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
+  cryptoList.textContent = "";
+  this.style.display = "none";
+  let el = document.getElementById('favCryptoList')
+  el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+}
+
 
 // -------------------------------------------------------------------
