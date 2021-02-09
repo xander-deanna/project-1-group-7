@@ -27,8 +27,8 @@ document.getElementById("stocksBtn").addEventListener("click", STKdisplaySearchR
 
 //Crypto search event listener for main (index) page
 document.getElementById("cryptoBtn").addEventListener("click", function () {
-  document.querySelector("#cryptoList").textContent = " "
-  document.querySelector("#featureTitle").textContent = "Your Search Results"
+  document.querySelector("#cryptoList").innerHTML = " "
+  document.querySelector("#featureTitleCrypto").innerHTML = "Your Search Results"
   getCryptoSearch()
 })
 
@@ -59,7 +59,6 @@ document.getElementById("clearBtnStocks").addEventListener("click", clearStockFa
 // Only display favorites
 getCrypto()
 STKdisplayAll()
-$('#favsModal').foundation('open')
 // -------------------------------------------------------------------
 
 
@@ -167,6 +166,7 @@ async function STKdisplayFavs() {
     ]
     el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']}</ul>`
   }
+  document.getElementById('clearBtnStocks').style.display = "block";
 }
 
 async function STKdisplayFeatured(){
@@ -314,23 +314,6 @@ function displayCrypto(cryptoData) {
   renderCryptoLocalStorage(cryptoData);
 }
 
-// Crypto favorite search 
-var cryptofavSearch = document.querySelector("#cryptoFavBtn");
-cryptofavSearch.addEventListener('click', function () {
-  var cryptoList = document.querySelector("#favCurrencyAvail");
-  cryptoList.innerHTML = "";
-  var favCryptoInput = document.querySelector("#cryptoFav")
-  if (favCryptoInput === null) {
-    return $('#errorModal').foundation('open')
-  }
-  
-  var favAddedConfirm = document.querySelector('#favConfirm');
-  favAddedConfirm.textContent=""
-  favAddedConfirm.textContent = "Added to Favorites!"
-  getCryptoFav()
-
-})
-
 
 function saveCrypto(cryptoId) {
   var found = false;
@@ -400,7 +383,7 @@ function displayCryptoSearch(cryptoData) {
 
 function getCryptoFav() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
-
+  
   fetch(requestUrl)
     .then(function (response) {
 
@@ -410,7 +393,8 @@ function getCryptoFav() {
             if (cryptoData["Error Message"]) {
               return $('#errorModal').foundation('open')
             }
-
+            var cryptoList = document.querySelector("#favCurrencyAvail")
+            cryptoList.innerHTML = ""
             displayCryptoFav(cryptoData)
             displayAddedMessage()
             return cryptoData
@@ -465,7 +449,7 @@ function renderCryptoLocalStorage(cryptoData) {
      
      let el = document.getElementById('favCurrencyAvail')
      el.textContent = 'There are no favorite currencies selected'
-     clearCryptoEl.style.display = "none";
+     document.getElementById('clearBtnCrypto').style.display = "none";
   }
      
  
@@ -479,13 +463,6 @@ function clearCryptoFavs() {
   this.style.display = "none";
   let el = document.getElementById('favCurrencyAvail')
   el.textContent = 'There are no favorite currencies selected'
-})
-
-
-function addStockFav() {
-  var stockFavInput = document.querySelector('#stockFav');
-  let el = document.getElementById('favCryptoList')
-   el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
 }
 
 // -------------------------------------------------------------------
