@@ -269,10 +269,13 @@ function displayCrypto(cryptoData) {
 // Crypto favorite search 
 var cryptofavSearch = document.querySelector("#cryptoFavBtn");
 cryptofavSearch.addEventListener('click', function () {
+  var cryptoList = document.querySelector("#favCurrencyAvail");
+  cryptoList.innerHTML = "";
   var favCryptoInput = document.querySelector("#cryptoFav")
   if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
   }
+  
   var favAddedConfirm = document.querySelector('#favConfirm');
   favAddedConfirm.textContent=""
   favAddedConfirm.textContent = "Added to Favorites!"
@@ -435,8 +438,8 @@ function displayCryptoFav(cryptoData) {
 function renderCryptoLocalStorage(cryptoData) {
   var cryptoArray = [];
   if (localStorage.cryptoFavorites) {
-    // var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
-    // cryptoFavTitle.textContent = "Favorite Currencies";
+    var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
+    cryptoFavTitle.textContent = "Favorite Currencies";
     var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
     for (var i = 0; i < cryptoArray.length; i++) {
 
@@ -452,8 +455,8 @@ function renderCryptoLocalStorage(cryptoData) {
   
   if (!cryptoArray || !cryptoArray[0]){
      
-     let el = document.getElementById('favCryptoList')
-     el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+     let el = document.getElementById('favCurrencyAvail')
+     el.textContent = 'There are no favorite currencies selected'
      clearCryptoEl.style.display = "none";
   }
      
@@ -466,8 +469,8 @@ clearCryptoEl.addEventListener("click", function () {
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   cryptoList.textContent = "";
   this.style.display = "none";
-  let el = document.getElementById('favCryptoList')
-  el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+  let el = document.getElementById('favCurrencyAvail')
+  el.textContent = 'There are no favorite durrencies selected'
   
   
 })
