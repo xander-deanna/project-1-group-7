@@ -338,6 +338,7 @@ function saveCrypto(cryptoId) {
     localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   }
   clearCryptoEl.style.display = "block";
+  // cryptoFavTitle.textContent="Favorite Stocks"
 }
 
 
