@@ -1,109 +1,78 @@
 
 // ------------------------------ INIT ------------------------------------
-
+// get random api key
+// pretty janky but whatever
 function STKapiKey() {
-  let keys  = ['U65M3D2LOCIOUFEM', '360MOC21QRQBN4A7', 'TVAWGAIT6NK20HO6', 'RO6INSI5F8XF24U4', 'VUSZAYEFYIX8EY68']
-  return 'VUSZAYEFYIX8EY68'
+  let keys = ['U65M3D2LOCIOUFEM', '360MOC21QRQBN4A7', 'TVAWGAIT6NK20HO6', 'RO6INSI5F8XF24U4', 'VUSZAYEFYIX8EY68', 'AFGS4TVRDX0GJ7OH']
   return keys[Math.floor(Math.random(keys.length))]
 }
-let STKIntradayURL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey()}`
-let STKSearchURL = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey()}`
 
-var renderStockDiv = document.getElementById("render-stock");
-var stocksListEl = document.getElementById("stocksList");
-var clearCryptoEl = document.getElementById("clearBtnCrypto");
-var clearStocksEl = document.getElementById("clearBtnStocks");
-var stockfavSearch = document.getElementById("stockFavBtn");
-
-function init() {
-  return $('#favsModal').foundation('open')
+function STKIntradayURL() {
+  return `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey()}`
+}
+function STKSearchURL()  {
+  return `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&apikey=${STKapiKey()}`
 }
 
-init()
+let stocksList = []
+fetch('stocks.json').then(r => r.json()).then(d => stocksList = d)
 
-
-getCrypto()
-stockIndex = []
 // When user inputs incorrect symbols to search for favs, returns them back to enter again. 
-var favTryAgain = document.querySelector("#TryFavAgainBtn");
-favTryAgain.addEventListener("click", function () {
-  return $('#favsModal').foundation('open')
-});
-
-document.querySelector('[data-close="favsModal"]').addEventListener('click', displayStocks)
-
-//Variables for search elements
-var stocksSearchBtn = document.getElementById("stocksBtn")
-var cryptoSearchBtn = document.getElementById("cryptoBtn")
+document.querySelector("#TryFavAgainBtn").addEventListener("click", () => $('#favsModal').foundation('open'))
 
 //Stocks search event listener for main (index) page
-
-stocksSearchBtn.addEventListener("click", STKSearchHandler)
+document.getElementById("stocksBtn").addEventListener("click", STKSearchHandler)
 
 //Crypto search event listener for main (index) page
-cryptoSearchBtn.addEventListener("click", function () {
-  var cryptoListEl = document.querySelector("#cryptoList")
-  var featureTitle = document.querySelector("#featureTitle")
-  cryptoListEl.textContent = " "
-  featureTitle.textContent = "Your Search Results"
+document.getElementById("cryptoBtn").addEventListener("click", function () {
+  document.querySelector("#cryptoList").textContent = " "
+  document.querySelector("#featureTitle").textContent = "Your Search Results"
   getCryptoSearch()
-});
+})
 
 // Only display favorites
-displayStocks()
+STKdisplay()
+getCrypto()
+$('#favsModal').foundation('open')
 
 // --------------------------- STOCKs ---------------------------------
-
-
-
-function displayStocksFeatured(){
-  var stocksymbol=["AMZN", "IBM","DIS", "MSFT", "CVX", "XOM", "TWTR", "FB", "ORCL"]
+async function STKdisplayFeatured(){
+  var featured = ["AMZN", "IBM","DIS", "MSFT", "CVX", "XOM", "TWTR", "FB", "ORCL"]
   // randomly selects one stock to be displayed
-  var symbolIndex = Math.floor(Math.random() * stocksymbol.length);
-  
-  var requestUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=` + stocksymbol[symbolIndex] + `&apikey=${STKapiKey()}`  
-  var featuredstocksRenderEl =document.getElementById("stocksList");
+  var symbolIndex = Math.floor(Math.random() * featured.length);
+  var data = await STKgetData(featured[symbolIndex])
+  var featuredstocksRenderEl = document.getElementById("stocksList");
+
   featuredstocksRenderEl.innerHTML = ''
-  fetch(requestUrl )
-    .then(function (response) {
-      return response.json();
-     })
-    .then(function (data) {
-      if (!data || data['Note'] || data['Error Message']) {
-        console.log('bad return')
-        return
-      }
-      var StockFuture=(data['Time Series (Daily)']);
-      var objKeys=Object.keys(StockFuture);
-      var propOfFirstEntry=objKeys.shift();
-      var Stocktorender=StockFuture[propOfFirstEntry];
-      var objValOpen=Number(Stocktorender['1. open']).toFixed(2);
-      var objValhigh=Number(Stocktorender['2. high']).toFixed(2);
-      var objValLow=Number(Stocktorender['3. low']).toFixed(2);
-      var objValClose=Number(Stocktorender['4. close']).toFixed(2)
-      // get previous day stock
-      var StockToenderSecondEntry=(data['Time Series (Daily)'][Object.keys(StockFuture)[1]]);
-      var objValpreviousDayClose=Number(StockToenderSecondEntry['4. close']).toFixed(2);
-      var symbolli=document.createElement("li");
 
-          symbolli.textContent=stocksymbol[symbolIndex] + ": " + objValhigh;
-      // add icon based on the change in price
-      var iconEl=document.createElement("a");
-      // change since last day
-      if (parseFloat(objValpreviousDayClose) < parseFloat(objValhigh)) {
-        iconEl.classList.add("fa", "fa-sort-down");
-        
-      } else {
-        iconEl.classList.add("fa", "fa-sort-up");
-        
-      }
+  // current day values
+  var StockFuture=(data['Time Series (Daily)']);
+  var objKeys=Object.keys(StockFuture);
+  var propOfFirstEntry=objKeys.shift();
+  var Stocktorender=StockFuture[propOfFirstEntry];
 
-        symbolli.appendChild(iconEl);
-        featuredstocksRenderEl.append(symbolli);
+  var objValhigh=Number(Stocktorender['2. high']).toFixed(2);
 
-    });
+  // previous day values
+  var StockToenderSecondEntry=(data['Time Series (Daily)'][Object.keys(StockFuture)[1]]);
+  var objValpreviousDayClose=Number(StockToenderSecondEntry['4. close']).toFixed(2);
 
+  var symbolli=document.createElement("li");
+
+  symbolli.textContent=featured[symbolIndex] + ": " + objValhigh;
+  // add icon based on the change in price
+  var iconEl=document.createElement("a");
+  // change since last day
+  if (parseFloat(objValpreviousDayClose) < parseFloat(objValhigh)) {
+    iconEl.classList.add("fa", "fa-sort-down");
+  } else {
+    iconEl.classList.add("fa", "fa-sort-up");
   }
+
+  symbolli.appendChild(iconEl);
+  featuredstocksRenderEl.append(symbolli);
+  }
+
 // Called on stock search button clicked
 // Populates stock list with results
 async function STKSearchHandler(event) {
@@ -116,36 +85,39 @@ async function STKSearchHandler(event) {
     if (!stock) {
       return $('#errorModal').foundation('open')
     }
-    displayStocks(stock)
-
+    STKdisplay(stock)
 }
 
 // Get data for stock by symbol
 async function STKgetData(symbol) {
     let results = await (
-        await fetch(`${STKIntradayURL}&symbol=${symbol}`)
+        await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
     ).json()
-    if (results['Note']) {
-      console.log('API KEY EXPIRED!')
+    let i = 0
+    while (results['Note'] || i == 25) {
+      results = await (
+        await fetch(`${STKIntradayURL()}&symbol=${symbol}`)
+      )
+      i++
     }
     if (results['Error Message']) {
       console.log('BAD QUERY')
+      console.log(results)
       return false
     }
-    console.log('something else')
-    console.log(results)
     return results
 }
 
 // create table of stocks
-async function displayStocks(searchStock=null) {
+async function STKdisplay(searchStock=null) {
     let favsSymbols = JSON.parse(localStorage.getItem('stockFavorites'))
     let favs = []
     for (let i in favsSymbols) {
-        favs.push(await STKgetData(favsSymbols[i]))
+      let res = await STKgetData(favsSymbols[i])
+      if (res) favs.push(res)
     }
-    displayStockFavs(favs)
-    displayStocksFeatured()
+    STKdisplayFavs(favs)
+    STKdisplayFeatured()
 
     if (!searchStock || (searchStock instanceof MouseEvent)) return
     
@@ -176,11 +148,9 @@ async function displayStocks(searchStock=null) {
         row.innerHTML = `${symbol}: ${price} ${changeIcon}`
         document.getElementById('stock-results-render-list').appendChild(row)
     }
-
-    
   }
 
-async function displayStockFavs(favs) {
+async function STKdisplayFavs(favs) {
   let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
     el.innerHTML = '<p>There are no favorite stocks selected</p>'
@@ -196,32 +166,22 @@ async function displayStockFavs(favs) {
 }
 // -------------------------------------------------------------------
 
-
-
-var cryptoListEl = document.getElementById("cryptoList");
-
 // Fetch for featured crypto
 function getCrypto() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
-
   fetch(requestUrl)
     .then(function (response) {
-
       if (response.ok) {
         return response.json()
           .then(function (cryptoData) {
             if (cryptoData["Error Message"]) {
               return $('#errorModal').foundation('open')
             }
-
             displayCrypto(cryptoData)
             return cryptoData
           })
-
       }
     })
-
-
 }
 
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
@@ -276,10 +236,10 @@ cryptofavSearch.addEventListener('click', function () {
 
 })
 
-// let stockfavSearch = document.getElementById('stockFavBtn')
+// let document.getElementById("stockFavBtn") = document.getElementById('stockFavBtn')
 // Stock Favorite Search
 
-stockfavSearch.addEventListener('click', function () {
+document.getElementById("stockFavBtn").addEventListener('click', function () {
   var favStockInput = document.querySelector("#stockFav")
 
   if (favStockInput === null) {
@@ -438,7 +398,7 @@ function renderCryptoLocalStorage(cryptoData) {
   }
 }
 
-clearCryptoEl.addEventListener("click", function () {
+document.getElementById("clearBtnCrypto").addEventListener("click", function () {
   var cryptoArray = [];
   var cryptoList = document.querySelector("#favCryptoList");
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
@@ -455,7 +415,7 @@ function addStockFav() {
 
 
 }
-clearStocksEl.addEventListener("click", function () {
+document.getElementById("clearBtnStocks").addEventListener("click", function () {
   var stockArray = [];
   localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
   var stocksLi = document.querySelector("#favStocksList");
