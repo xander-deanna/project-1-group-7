@@ -14,6 +14,8 @@ var stocksListEl = document.getElementById("stocksList");
 var clearCryptoEl = document.getElementById("clearBtnCrypto");
 var clearStocksEl = document.getElementById("clearBtnStocks");
 var stockfavSearch = document.getElementById("stockFavBtn");
+var stockFavTitle = document.querySelector("#stockFavTitle");
+var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
 
 function init() {
   return $('#favsModal').foundation('open')
@@ -184,6 +186,8 @@ async function displayStockFavs(favs) {
   let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
     el.innerHTML = '<p>There are no favorite stocks selected</p>'
+    clearStocksEl.style.display = "none";
+  
     return
   }
   el.innerHTML = ''
@@ -310,6 +314,7 @@ function saveStocks(symbolId) {
     localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
   }
   clearStocksEl.style.display = "block";
+  stockFavTitle.textContent="Favorite Stocks";
 }
 
 function saveCrypto(cryptoId) {
@@ -440,7 +445,16 @@ function renderCryptoLocalStorage(cryptoData) {
       cryptoList.appendChild(favCryptoLi);
       
     }
+
+  } 
+  
+  if (!cryptoArray || !cryptoArray[0]){
+     let el = document.getElementById('favCryptoList')
+     el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+     clearCryptoEl.style.display = "none";
   }
+     
+  
 }
 
 clearCryptoEl.addEventListener("click", function () {
@@ -449,6 +463,10 @@ clearCryptoEl.addEventListener("click", function () {
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   cryptoList.textContent = "";
   this.style.display = "none";
+  let el = document.getElementById('favCryptoList')
+  el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+  
+  
 })
 
 
@@ -458,7 +476,7 @@ function addStockFav() {
   var stockFavValue = stockFavInput.value;
   var stockFavValueeCaps = stockFavValue.toUpperCase();
   saveStocks(stockFavValueeCaps);
-
+  displayStocks();
 
 }
 clearStocksEl.addEventListener("click", function () {
@@ -467,4 +485,10 @@ clearStocksEl.addEventListener("click", function () {
   var stocksLi = document.querySelector("#favStocksList");
   stocksLi.textContent = "";
   this.style.display = "none";
+  
+  let el = document.getElementById('favStocksList')
+  el.innerHTML = '<p>There are no favorite stocks selected</p>'
+  clearStocksEl.style.display = "none";
+  
+  
 })
