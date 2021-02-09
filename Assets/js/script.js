@@ -27,8 +27,10 @@ document.getElementById("cryptoBtn").addEventListener("click", function () {
   getCryptoSearch()
 })
 
+// Stock Favorite Search
+document.getElementById("stockFavBtn").addEventListener('click', addStockFav)
+
 // Only display favorites
-STKdisplayAll()
 getCrypto()
 $('#favsModal').foundation('open')
 
@@ -157,6 +159,31 @@ async function STKdisplayFeatured(){
   symbolli.appendChild(iconEl);
   featuredstocksRenderEl.append(symbolli);
 }
+
+function addStockFav() {
+  var stockFavInput = document.querySelector('#stockFav');
+  var stockFavValue = stockFavInput.value;
+  var symbolId = stockFavValue.toUpperCase();
+
+  var found = false;
+  var stockArray = [];
+
+  if (JSON.parse(localStorage.getItem("stockFavorites"))) {
+    stockArray = JSON.parse(localStorage.getItem("stockFavorites"))
+  }
+
+  // check for duplicate symbol name
+  for (var i = 0; i < stockArray.length; i++) {
+    if (stockArray[i] === symbolId) {
+      found = true;
+    }
+  }
+
+  if (!found) {
+    stockArray.push(symbolId);
+    localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
+  }
+}
 // -------------------------------------------------------------------
 
 // Fetch for featured crypto
@@ -228,41 +255,6 @@ cryptofavSearch.addEventListener('click', function () {
   getCryptoFav()
 
 })
-
-// let document.getElementById("stockFavBtn") = document.getElementById('stockFavBtn')
-// Stock Favorite Search
-
-document.getElementById("stockFavBtn").addEventListener('click', function () {
-  var favStockInput = document.querySelector("#stockFav")
-
-  if (favStockInput === null) {
-    return $('#errorModal').foundation('open')
-  }
-
-  addStockFav()
-})
-
-
-function saveStocks(symbolId) {
-  var found = false;
-  var stockArray = [];
-
-  if (JSON.parse(localStorage.getItem("stockFavorites"))) {
-    stockArray = JSON.parse(localStorage.getItem("stockFavorites"))
-  }
-
-  // check for duplicate symbol name
-  for (var i = 0; i < stockArray.length; i++) {
-    if (stockArray[i] === symbolId) {
-      found = true;
-    }
-  }
-
-  if (!found) {
-    stockArray.push(symbolId);
-    localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-  }
-}
 
 function saveCrypto(cryptoId) {
   var found = false;
@@ -396,13 +388,6 @@ document.getElementById("clearBtnCrypto").addEventListener("click", function () 
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   cryptoList.textContent = "";
 })
-
-function addStockFav() {
-  var stockFavInput = document.querySelector('#stockFav');
-  var stockFavValue = stockFavInput.value;
-  var stockFavValueeCaps = stockFavValue.toUpperCase();
-  saveStocks(stockFavValueeCaps);
-}
 
 document.getElementById("clearBtnStocks").addEventListener("click", function () {
   var stockArray = [];
