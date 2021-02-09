@@ -227,15 +227,7 @@ function getCrypto() {
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
 function displayCrypto(cryptoData) {
 
-  // pulls current BTC rate
-  var bitcoinPrice = cryptoData.data.rates.BTC
-
-  // adds current BTC rate to HTML
-  var btcFeature = document.querySelector("#btcfeature")
-  btcFeature.textContent = " BTC: " + bitcoinPrice;
-
-
-  var topCrypto = [];
+   var topCrypto = [];
 
   // gets list currency abbreviations from rate object keys
   var keys = Object.keys(cryptoData.data.rates)
@@ -267,10 +259,14 @@ function displayCrypto(cryptoData) {
 var cryptofavSearch = document.querySelector("#cryptoFavBtn");
 cryptofavSearch.addEventListener('click', function () {
   var favCryptoInput = document.querySelector("#cryptoFav")
-
+  var leadAlert = document.querySelector("#leadAlert")
   if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
   }
+  var favAddedConfirm = document.createElement('p');
+  favAddedConfirm.textContent = "Added to Favorites!"
+  favAddedConfirm.className = 'favConfirm'
+  leadAlert.appendChild(favAddedConfirm)
 
   getCryptoFav()
 
@@ -285,7 +281,10 @@ stockfavSearch.addEventListener('click', function () {
   if (favStockInput === null) {
     return $('#errorModal').foundation('open')
   }
-
+  var favAddedConfirm = document.createElement('p');
+  favAddedConfirm.textContent = "Added to Favorites!"
+  favAddedConfirm.className = 'favConfirm'
+  leadAlert.appendChild(favAddedConfirm)
   addStockFav()
  
 })
@@ -411,7 +410,10 @@ function displayCryptoFav(cryptoData) {
   if (cryptoData.data.rates[cryptoFavValueCaps] === undefined) {
     return $('#errorModal').foundation('open')
   }
-
+  // if (!localStorage.cryptoFavorites) {
+  // var favTitle = document.querySelector("#favTitle")
+  // favTitle.textContent = "Favorite Currencies"}
+  
   var cryptoList = document.querySelector("#favCryptoList")
   var favCryptoLi = document.createElement('li');
   favCryptoLi.textContent = cryptoFavResult
@@ -424,7 +426,8 @@ function displayCryptoFav(cryptoData) {
 function renderCryptoLocalStorage(cryptoData) {
   var cryptoArray = [];
   if (localStorage.cryptoFavorites) {
-
+    var cryptoFavTitle = document.querySelector("#cryptoFavTitle");
+    cryptoFavTitle.textContent = "Favorite Currencies";
     var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
     for (var i = 0; i < cryptoArray.length; i++) {
 
@@ -433,7 +436,7 @@ function renderCryptoLocalStorage(cryptoData) {
       var favCryptoLi = document.createElement('li');
       favCryptoLi.textContent = cryptoFavResult
       cryptoList.appendChild(favCryptoLi);
-
+      
     }
   }
 }

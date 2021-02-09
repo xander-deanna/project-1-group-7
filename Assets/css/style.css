@@ -10,7 +10,9 @@ h4, p, i {
 th, td {
     color: #000000;
 }
-
+.favConfirm{
+    color:#000000
+}
 /* Changes font for the logo */
 .logo {
     color: #fafafa;
@@ -120,4 +122,3 @@ li {
 color: rgb(3, 11, 82);
 border-color:rgb(241, 6, 6)
 }
-
