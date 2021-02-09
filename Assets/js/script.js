@@ -309,6 +309,7 @@ function saveStocks(symbolId) {
     stockArray.push(symbolId);
     localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
   }
+  clearStocksEl.style.display = "block";
 }
 
 function saveCrypto(cryptoId) {
@@ -329,6 +330,7 @@ function saveCrypto(cryptoId) {
     cryptoArray.push(cryptoId);
     localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   }
+  clearCryptoEl.style.display = "block";
 }
 
 
@@ -446,6 +448,7 @@ clearCryptoEl.addEventListener("click", function () {
   var cryptoList = document.querySelector("#favCryptoList");
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   cryptoList.textContent = "";
+  this.style.display = "none";
 })
 
 
@@ -463,4 +466,5 @@ clearStocksEl.addEventListener("click", function () {
   localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
   var stocksLi = document.querySelector("#favStocksList");
   stocksLi.textContent = "";
+  this.style.display = "none";
 })
