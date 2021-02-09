@@ -14,12 +14,16 @@ var stocksListEl = document.getElementById("stocksList");
 var clearCryptoEl = document.getElementById("clearBtnCrypto");
 var clearStocksEl = document.getElementById("clearBtnStocks");
 var stockfavSearch = document.getElementById("stockFavBtn");
+var favMenuBtnEL = document.getElementById("favsModalBtn");
 
-function init() {
+
+favMenuBtnEL.addEventListener("click", function ()  {
   return $('#favsModal').foundation('open')
-}
+});
 
-init()
+// function init() {
+//   return $('#favsModal').foundation('open')
+// }
 
 
 getCrypto()
