@@ -6,16 +6,21 @@ function STKapiKey() {
   let keys = ['U65M3D2LOCIOUFEM', '360MOC21QRQBN4A7', 'TVAWGAIT6NK20HO6', 'RO6INSI5F8XF24U4', 'VUSZAYEFYIX8EY68', 'AFGS4TVRDX0GJ7OH']
   return keys[Math.floor(Math.random(keys.length))]
 }
-
 function STKIntradayURL() {
   return `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${STKapiKey()}`
 }
-
 let stocksList = []
 fetch('stocks.json').then(r => r.json()).then(d => stocksList = d)
 
+// when user clicks the button, open the favorites add modal
+document.getElementById("favsModalBtn").addEventListener("click", function () {
+  return $('#favsModal').foundation('open')
+})
+
 // When user inputs incorrect symbols to search for favs, returns them back to enter again. 
-document.querySelector("#TryFavAgainBtn").addEventListener("click", () => $('#favsModal').foundation('open'))
+document.querySelector("#TryFavAgainBtn").addEventListener("click", function() {
+  $('#favsModal').foundation('open')
+})
 
 //Stocks search event listener for main (index) page
 document.getElementById("stocksBtn").addEventListener("click", STKdisplaySearch)
@@ -28,13 +33,74 @@ document.getElementById("cryptoBtn").addEventListener("click", function () {
 })
 
 // Stock Favorite Search
-document.getElementById("stockFavBtn").addEventListener('click', addStockFav)
+document.getElementById("stockFavBtn").addEventListener('click', function() {
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
+  favAddedConfirm.textContent = "Added to Favorites!"
+  // hide
+  setTimeout(() => favAddedConfirm.textContent = '', 500)
+  addStockFav()
+})
+
+// Crypto favorite search 
+document.querySelector("#cryptoFavBtn").addEventListener('click', function () {
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
+  favAddedConfirm.textContent = "Added to Favorites!"
+  // hide
+  setTimeout(() => favAddedConfirm.textContent = '', 500)
+  getCryptoFav()
+})
+
+
+document.getElementById("clearBtnCrypto").addEventListener("click", function () {
+  var cryptoArray = [];
+  var cryptoList = document.querySelector("#favCryptoList");
+  localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
+  cryptoList.textContent = "";
+  this.style.display = "none";
+  let el = document.getElementById('favCryptoList')
+  el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+})
+
+document.getElementById("clearBtnStocks").addEventListener("click", function () {
+  var stockArray = [];
+  localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
+  var stocksLi = document.querySelector("#favStocksList");
+  stocksLi.textContent = "";
+  this.style.display = "none";
+  let el = document.getElementById('favStocksList')
+  el.innerHTML = '<p>There are no favorite stocks selected</p>'
+  clearStocksEl.style.display = "none";
+})
 
 // Only display favorites
 getCrypto()
 $('#favsModal').foundation('open')
+// -------------------------------------------------------------------
 
-// --------------------------- STOCKs ---------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --------------------------- STOCKS ---------------------------------
 // Called on stock search button clicked
 // Populates stock list with results
 // Get data for stock by symbol
@@ -112,6 +178,7 @@ async function STKdisplayFavs() {
   let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
     el.innerHTML = '<p>There are no favorite stocks selected</p>'
+    clearStocksEl.style.display = "none";
     return
   }
   el.innerHTML = ''
@@ -186,6 +253,22 @@ function addStockFav() {
 }
 // -------------------------------------------------------------------
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------    CRYPTO      -------------------------------------
 // Fetch for featured crypto
 function getCrypto() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
@@ -207,15 +290,7 @@ function getCrypto() {
 // Displays five featured currencies at random and the current Bitcoint (BTC) rate vs 1 USD
 function displayCrypto(cryptoData) {
 
-  // pulls current BTC rate
-  var bitcoinPrice = cryptoData.data.rates.BTC
-
-  // adds current BTC rate to HTML
-  var btcFeature = document.querySelector("#btcfeature")
-  btcFeature.textContent = " BTC: " + bitcoinPrice;
-
-
-  var topCrypto = [];
+   var topCrypto = [];
 
   // gets list currency abbreviations from rate object keys
   var keys = Object.keys(cryptoData.data.rates)
@@ -243,18 +318,6 @@ function displayCrypto(cryptoData) {
   renderCryptoLocalStorage(cryptoData);
 }
 
-// Crypto favorite search 
-var cryptofavSearch = document.querySelector("#cryptoFavBtn");
-cryptofavSearch.addEventListener('click', function () {
-  var favCryptoInput = document.querySelector("#cryptoFav")
-
-  if (favCryptoInput === null) {
-    return $('#errorModal').foundation('open')
-  }
-
-  getCryptoFav()
-
-})
 
 function saveCrypto(cryptoId) {
   var found = false;
@@ -274,6 +337,7 @@ function saveCrypto(cryptoId) {
     cryptoArray.push(cryptoId);
     localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   }
+  clearCryptoEl.style.display = "block";
 }
 
 
@@ -355,7 +419,10 @@ function displayCryptoFav(cryptoData) {
   if (cryptoData.data.rates[cryptoFavValueCaps] === undefined) {
     return $('#errorModal').foundation('open')
   }
-
+  // if (!localStorage.cryptoFavorites) {
+  // var favTitle = document.querySelector("#favTitle")
+  // favTitle.textContent = "Favorite Currencies"}
+  
   var cryptoList = document.querySelector("#favCryptoList")
   var favCryptoLi = document.createElement('li');
   favCryptoLi.textContent = cryptoFavResult
@@ -368,7 +435,6 @@ function displayCryptoFav(cryptoData) {
 function renderCryptoLocalStorage(cryptoData) {
   var cryptoArray = [];
   if (localStorage.cryptoFavorites) {
-
     var cryptoArray = JSON.parse(localStorage.getItem("cryptoFavorites"));
     for (var i = 0; i < cryptoArray.length; i++) {
 
@@ -377,21 +443,18 @@ function renderCryptoLocalStorage(cryptoData) {
       var favCryptoLi = document.createElement('li');
       favCryptoLi.textContent = cryptoFavResult
       cryptoList.appendChild(favCryptoLi);
-
+      
     }
+
+  } 
+  
+  if (!cryptoArray || !cryptoArray[0]){
+     let el = document.getElementById('favCryptoList')
+     el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+     clearCryptoEl.style.display = "none";
   }
+     
+ 
 }
 
-document.getElementById("clearBtnCrypto").addEventListener("click", function () {
-  var cryptoArray = [];
-  var cryptoList = document.querySelector("#favCryptoList");
-  localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
-  cryptoList.textContent = "";
-})
-
-document.getElementById("clearBtnStocks").addEventListener("click", function () {
-  var stockArray = [];
-  localStorage.setItem("stockFavorites", JSON.stringify(stockArray));
-  var stocksLi = document.querySelector("#favStocksList");
-  stocksLi.textContent = "";
-})
+// -------------------------------------------------------------------
