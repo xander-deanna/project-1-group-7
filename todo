@@ -1,0 +1,3 @@
+ensure no duplicate stock favorites are stored
+ensure no incorrect stock favorites are entered
+display little bloop when add is clicked
