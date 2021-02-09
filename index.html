@@ -49,7 +49,7 @@
         </div>
 
         <!-- stock favorite list -->
-        <h6 class= "boxTitle text-center" id="favTitle">Favorite Stocks</h6>
+        <h6 class= "boxTitle text-center" id="stockFavTitle">Favorite Stocks</h6>
         <ul id="favStocksList">
         </ul>
         <button id="clearBtnStocks" class="clearBtn button" type="button">Clear Favorites</button>
@@ -72,7 +72,7 @@
       <!----------------------------------------------------------------------------------------->
       <div id="cryptoBox" class= "medium-5 columns callout">
         <div id="cryptoHead" class="text-center">
-          <h4 id="cryptoTitle" class= "boxTitle">Crypto Exchange Rates</h4>
+          <h4 id="cryptoTitle" class= "boxTitle">Crypto/Forex Exchange Rates</h4>
           <p>Exchange rates displayed in reference to 1 USD</p>
           <span class="searchBox">
             <input id="cryptoSearch" type="search" class="search" placeholder="Search"></input>
@@ -81,10 +81,8 @@
         </div>
 
         <!-- crypto favorite list -->
-        <h6 class= "boxTitle text-center" id="favTitle">Favorite Crypto</h6>
-        <ul id="favCryptoList">
-           <li id="btcfeature"></li>
-        </ul>
+        <h6 class= "boxTitle text-center" id="cryptoFavTitle"></h6>
+        <ul id="favCryptoList"></ul>
         <button id="clearBtnCrypto" class="clearBtn button" type="button">Clear Favorites</button>
         <br>
         <br>
@@ -112,8 +110,11 @@
     <!-- favorites modal -->
     <!----------------------------------------------------------------------------------------->
     <div class="reveal" id="favsModal" data-reveal>
+
       <h1 class= "alert"></h1>
-      <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
+      <p class="lead alert" id="leadAlert">Enter your favorite Stock, Crypto, or Forex Codes
+      </p>
+
       <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
       <span id="favSearch" class= "alert" aria-hidden="true">
         <input id="stockFav" type="search" class="search" placeholder="Enter Stocks Here"></input>
