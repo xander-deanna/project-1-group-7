@@ -22,12 +22,12 @@
       <div class="top-bar">
         <div class="top-bar-left">
           <ul class="menu">
-            <li><a class="logo" href="#"><i class="fas fa-coins"></i>
+            <li><a class="logo" href="https://xander-deanna.github.io/project-1-group-7/"><i class="fas fa-coins"></i>
               tradify.io</a></li>
           </ul>
         </div>
         <div class="top-bar-right">
-          <button><i class="fas fa-star"></i></button>
+          <button class="favsModal"><i class="fas fa-star favMenuBtn"></i></button>
         </div>
       </div>
     </header>
@@ -49,7 +49,7 @@
         </div>
 
         <!-- stock favorite list -->
-        <h6 class= "boxTitle text-center" id="favTitle">Favorite Stocks</h6>
+        <h6 class= "boxTitle text-center" id="stockFavTitle">Favorite Stocks</h6>
         <ul id="favStocksList">
         </ul>
         <button id="clearBtnStocks" class="clearBtn button" type="button">Clear Favorites</button>
@@ -81,7 +81,7 @@
         </div>
 
         <!-- crypto favorite list -->
-        <h6 class= "boxTitle text-center" id="favTitle">Favorite Crypto</h6>
+        <h6 class= "boxTitle text-center" id="stockFavTitle">Favorite Crypto</h6>
         <ul id="favCryptoList">
            <li id="btcfeature"></li>
         </ul>
@@ -112,6 +112,7 @@
     <!-- favorites modal -->
     <!----------------------------------------------------------------------------------------->
     <div class="reveal" id="favsModal" data-reveal>
+      <h1 class="logo2"><i class="fas fa-coins favIconModal"></i> tradify.io favorites </i></h1>
       <h1 class= "alert"></h1>
       <p class="lead alert">Enter your favorite Stock or Crypto Codes</p>
       <button class="close-button alert" data-close aria-label="Close modal" type="button"><span class= "alert" aria-hidden="true">&times;</span></button>
