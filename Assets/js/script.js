@@ -445,6 +445,7 @@ function renderCryptoLocalStorage(cryptoData) {
   } 
   
   if (!cryptoArray || !cryptoArray[0]){
+     
      let el = document.getElementById('favCryptoList')
      el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
      document.getElementById('clearBtnCrypto').style.display = "none";
