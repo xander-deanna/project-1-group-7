@@ -314,6 +314,23 @@ function displayCrypto(cryptoData) {
   renderCryptoLocalStorage(cryptoData);
 }
 
+// Crypto favorite search 
+var cryptofavSearch = document.querySelector("#cryptoFavBtn");
+cryptofavSearch.addEventListener('click', function () {
+  var cryptoList = document.querySelector("#favCurrencyAvail");
+  cryptoList.innerHTML = "";
+  var favCryptoInput = document.querySelector("#cryptoFav")
+  if (favCryptoInput === null) {
+    return $('#errorModal').foundation('open')
+  }
+  
+  var favAddedConfirm = document.querySelector('#favConfirm');
+  favAddedConfirm.textContent=""
+  favAddedConfirm.textContent = "Added to Favorites!"
+  getCryptoFav()
+
+})
+
 
 function saveCrypto(cryptoId) {
   var found = false;
@@ -446,9 +463,9 @@ function renderCryptoLocalStorage(cryptoData) {
   
   if (!cryptoArray || !cryptoArray[0]){
      
-     let el = document.getElementById('favCryptoList')
-     el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
-     document.getElementById('clearBtnCrypto').style.display = "none";
+     let el = document.getElementById('favCurrencyAvail')
+     el.textContent = 'There are no favorite currencies selected'
+     clearCryptoEl.style.display = "none";
   }
      
  
@@ -460,9 +477,15 @@ function clearCryptoFavs() {
   localStorage.setItem("cryptoFavorites", JSON.stringify(cryptoArray));
   cryptoList.textContent = "";
   this.style.display = "none";
-  let el = document.getElementById('favCryptoList')
-  el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
-}
+  let el = document.getElementById('favCurrencyAvail')
+  el.textContent = 'There are no favorite currencies selected'
+})
 
+
+function addStockFav() {
+  var stockFavInput = document.querySelector('#stockFav');
+  let el = document.getElementById('favCryptoList')
+   el.innerHTML = '<p>There are no favorite crypto Currencies selected</p>'
+}
 
 // -------------------------------------------------------------------
