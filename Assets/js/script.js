@@ -133,7 +133,7 @@ async function STKdisplaySearchResults() {
       Object.keys(searchStock['Time Series (Daily)'])[1]
   ]
 
-  let price = currentDayData['2. high']
+  let price = parseFloat(currentDayData['2. high']).toFixed(2)
   let changeIcon
 
   // change since last day
