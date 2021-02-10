@@ -156,11 +156,11 @@ async function STKdisplayFavs() {
   }
   el.innerHTML = ''
   for (let i in favs) {
-    let currentDayData = searchStock['Time Series (Daily)'][
-      Object.keys(searchStock['Time Series (Daily)'])[0]
+    let currentDayData = favs[i]['Time Series (Daily)'][
+      Object.keys(favs[i]['Time Series (Daily)'])[0]
     ]
-    let previousDayData = searchStock['Time Series (Daily)'][
-        Object.keys(searchStock['Time Series (Daily)'])[1]
+    let previousDayData = favs[i]['Time Series (Daily)'][
+        Object.keys(favs[i]['Time Series (Daily)'])[1]
     ]
     let changeIcon
     // change since last day
