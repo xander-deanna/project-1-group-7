@@ -161,10 +161,20 @@ async function STKdisplayFavs() {
   }
   el.innerHTML = ''
   for (let i in favs) {
-    let currentDayData = favs[i]['Time Series (Daily)'][
-      Object.keys(favs[i]['Time Series (Daily)'])[0]
+    let currentDayData = searchStock['Time Series (Daily)'][
+      Object.keys(searchStock['Time Series (Daily)'])[0]
     ]
-    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']}</ul>`
+    let previousDayData = searchStock['Time Series (Daily)'][
+        Object.keys(searchStock['Time Series (Daily)'])[1]
+    ]
+    let changeIcon
+    // change since last day
+    if (parseFloat(previousDayData['4. close']) < parseFloat(currentDayData['2. high'])) {
+        changeIcon = '<i class="fa fa-sort-down"></i>'
+    } else {
+        changeIcon = '<i class="fa fa-sort-up"></i>'
+    }
+    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']} ${changeIcon}</ul>`
   }
   document.getElementById('clearBtnStocks').style.display = "block";
 }
