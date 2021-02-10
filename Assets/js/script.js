@@ -318,7 +318,7 @@ function displayCrypto(cryptoData) {
 var cryptofavSearch = document.querySelector("#cryptoFavBtn");
 cryptofavSearch.addEventListener('click', function () {
   var cryptoList = document.querySelector("#favCurrencyAvail");
-  cryptoList.innerHTML = "";
+  cryptoList.textContent = "";
   var favCryptoInput = document.querySelector("#cryptoFav")
   if (favCryptoInput === null) {
     return $('#errorModal').foundation('open')
@@ -479,7 +479,7 @@ function clearCryptoFavs() {
   this.style.display = "none";
   let el = document.getElementById('favCurrencyAvail')
   el.textContent = 'There are no favorite currencies selected'
-})
+}
 
 
 function addStockFav() {
