@@ -150,3 +150,7 @@ border-color:rgb(241, 6, 6)
     opacity: 0;
     color: #00762b;
 }
+
+.not-avail-message {
+    text-align: center;
+}

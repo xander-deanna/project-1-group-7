@@ -26,11 +26,7 @@ document.querySelector("#TryFavAgainBtn").addEventListener("click", function() {
 document.getElementById("stocksBtn").addEventListener("click", STKdisplaySearchResults)
 
 //Crypto search event listener for main (index) page
-document.getElementById("cryptoBtn").addEventListener("click", function () {
-  document.querySelector("#cryptoList").innerHTML = " "
-  document.querySelector("#featureTitleCrypto").innerHTML = "Your Search Results"
-  getCryptoSearch()
-})
+document.getElementById("cryptoBtn").addEventListener("click", getCryptoSearch)
 
 // Stock Favorite Search
 document.getElementById("stockFavBtn").addEventListener('click', addStockFav)
@@ -38,9 +34,6 @@ document.getElementById("stockFavBtn").addEventListener('click', addStockFav)
 // Crypto favorite search 
 document.querySelector("#cryptoFavBtn").addEventListener('click', getCryptoFav)
 
-document.getElementById('favsModal').addEventListener('click', function() {
-  console.log('click')
-})
 
 // display added to favorites if correct
 function displayAddedMessage() {
@@ -115,8 +108,8 @@ async function STKdisplaySearchResults() {
   let searchStock = await STKgetData(query)
   if (!searchStock) return $('#schErrorModal').foundation('open')
 
-  document.getElementById('stock-results-render').style.display = 'block'
-  document.getElementById('stock-results-render-list').innerHTML = ''
+  document.getElementById('featuretitleStocks').innerHTML = 'Your Search Results'
+  document.getElementById('stocksList').innerHTML = ''
 
   let symbol = searchStock['Meta Data']['2. Symbol']
   let row = document.createElement('li')
@@ -138,7 +131,7 @@ async function STKdisplaySearchResults() {
       changeIcon = '<i class="fa fa-sort-up"></i>'
   }
   row.innerHTML = `${symbol.toUpperCase()}: ${price} ${changeIcon}`
-  document.getElementById('stock-results-render-list').appendChild(row)
+  document.getElementById('stocksList').appendChild(row)
 }
 
 async function STKdisplayFavs() {
@@ -150,7 +143,7 @@ async function STKdisplayFavs() {
   }
   let el = document.getElementById('favStocksList')
   if (!favs || !favs[0]) {
-    el.innerHTML = '<p>There are no favorite stocks selected</p>'
+    el.innerHTML = '<p class="not-avail-message">There are no favorite stocks selected</p>'
     document.getElementById('clearBtnStocks').style.display = "none";
     return
   }
@@ -248,7 +241,7 @@ function clearStockFavs() {
   stocksLi.textContent = "";
   this.style.display = "none";
   let el = document.getElementById('favStocksList')
-  el.innerHTML = '<p>There are no favorite stocks selected</p>'
+  el.innerHTML = '<p class="not-avail-message">There are no favorite stocks selected</p>'
   document.getElementById('clearBtnStocks').style.display = "none";
 }
 
@@ -345,7 +338,7 @@ function saveCrypto(cryptoId) {
 // Fetch for User Search Crypto
 function getCryptoSearch() {
   var requestUrl = 'https://api.coinbase.com/v2/exchange-rates';
-
+  
   fetch(requestUrl)
     .then(function (response) {
 
@@ -364,6 +357,7 @@ function getCryptoSearch() {
 }
 
 function displayCryptoSearch(cryptoData) {
+
   var cryptoSearch = document.querySelector('#cryptoSearch')
 
   var cryptoSearchValue = cryptoSearch.value
@@ -376,6 +370,9 @@ function displayCryptoSearch(cryptoData) {
   if (cryptoData.data.rates[cryptoSearchValueCaps] === undefined) {
     return $('#schErrorModal').foundation('open')
   }
+
+  document.querySelector("#cryptoList").innerHTML = ""
+  document.querySelector("#featureTitleCrypto").innerHTML = "Your Search Results"
 
   var featuredList = document.querySelector("#cryptoList")
   var featuredEl = document.createElement('li');

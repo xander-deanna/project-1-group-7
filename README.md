@@ -5,7 +5,7 @@
 _Tradify is a cutting edge investment tool for today's investors._
 
 _Motivated by the recent financial revolution happening in US markets, we wanted to develop a tool that empowers investors of all types, levels, and interest. With Tradify, savvy investors who want to peer into the world of stocks, cryptocurrency, and foreign exchange markets, can access our platform to get up to the minute pricing data and insight in three financial markets in one tool, instead of having to use a separate tool for each.
-This app will run in the browser and feature dynamically updated HTML and CSS powered by jquery, and uses Foundation CDN for styling. Users can retrieve current stocks using [Stock API](https://www.alphavantage.co/documentation/), and cryptocurrency prices using [Coinbase API](https://developers.coinbase.com/)._
+This app will run in the browser and feature dynamically updated HTML and CSS powered by JavaScript, and uses the Foundation CSS framework for styling HTML. Users can retrieve current stocks using [Stock API](https://www.alphavantage.co/documentation/), and cryptocurrency prices using [Coinbase API](https://developers.coinbase.com/)._
 
 <img src="./Assets/images/TradifyGIFScroll.gif" alt="Tradify" width=25% style="text-align: center">
 
@@ -22,7 +22,7 @@ This app will run in the browser and feature dynamically updated HTML and CSS po
 
 ## **Script features:**
 
-- _API call (Fetch and AJAX)_
+- _HTTP requests (using the Fetch API)_
 - _Event listener (onclick)_
 - _Object, function, array, for loop and if condition_
 - _Dynamically create new DOM elements_
@@ -32,7 +32,7 @@ This app will run in the browser and feature dynamically updated HTML and CSS po
 
 ## **Project Demo**
 
-_When I open the Tradify app it will randomly render one feature stock price and 5 crypto currency prices_
+_When I open the Tradify app it will randomly render one featured stock price and 5 crypto currency prices_
 _This app will also display favorite stocks and currencies for quick reference._
 
 ### <img src="./Assets/images/Display_img_1.PNG" alt="Tradify" width=70%>
@@ -70,8 +70,7 @@ https://github.com/xander-deanna/project-1-group-7.git
 
 ## **Technologies**
 
-
-_Visual Studio code, HTML5, Foundation, CSS, Javascript, jQuery, AJAX and server side API_
+_HTML5, Foundation, CSS, Javascript, AlphaVantage API, Coinbase API_
 
 <hr>
 
