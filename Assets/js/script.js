@@ -112,13 +112,8 @@ async function STKdisplayAll() {
 async function STKdisplaySearchResults() {
   let query = document.getElementById('stocksSearch').value
   if (query == '') return
-  let searchStock = (
-    await STKgetData(query)
-  )
-  console.log(searchStock)
-  if (!searchStock) {
-    return $('#errorModal').foundation('open')
-  }
+  let searchStock = await STKgetData(query)
+  if (!searchStock) return $('#schErrorModal').foundation('open')
 
   document.getElementById('stock-results-render').style.display = 'block'
   document.getElementById('stock-results-render-list').innerHTML = ''
