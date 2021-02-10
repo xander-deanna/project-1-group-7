@@ -7,7 +7,8 @@ h4, p, i {
     font-family: 'Mukta', sans-serif;
 }
 
-th, td {
+/* Changes font color for favorites add confirmation message */
+.favConfirm {
     color: #000000;
 }
 
@@ -15,6 +16,11 @@ th, td {
 .logo {
     color: #fafafa;
     background-color: #00000000;
+    font-size: xx-large;
+    font-family: 'Pacifico', cursive;
+}
+.logo2 {
+    color: #000000;
     font-size: xx-large;
     font-family: 'Pacifico', cursive;
 }
@@ -29,10 +35,6 @@ th, td {
     font-size: xx-large;
     font-family: 'Pacifico', cursive;
 }
-/* font awesome icon for logo */
-.fa-newspaper {
-    margin-bottom: 10px;
-}
 
 /* Recolors navbar */
 .top-bar, .top-bar-left .menu {
@@ -43,7 +45,18 @@ th, td {
     border-bottom: 1px solid #000000;
 }
 
-/* Gives bitcoin background */
+/* favorites icon in the navbar */
+#favsModalBtn {
+    margin: 20px 20px 10px 10px;
+}
+.favMenuBtn {
+    font-size: large;
+}
+#favsModalBtn:hover {
+    color: #80dbff;
+}
+
+/* sets bitcoin background */
 body {
     background:  #000000db url("../images/background.png") no-repeat fixed center;
     background-position: center;
@@ -78,6 +91,7 @@ li {
     border: 1px solid #000000;
     border-radius: 10px;
     box-shadow: 10px 10px 5px #0000008c;
+    margin: 0px 0px 30px 0px;
 }
 
 /* Altering buttons and search to give more personal flair */
@@ -94,7 +108,6 @@ li {
     background-color: #4e3f98;
 }
 .clearBtn {
-    float: right;
     margin: 5px 5px 5px 5px;
 }
 .search {
@@ -104,14 +117,27 @@ li {
     width: 150px;
     display: inline-flex;
 }
+.hideBtn {
+    display: none!important;
+}
 
-/* Up and down icon for crypto (if we want to use them) */
+.favIconModal {
+    color:black
+}
+
+/* Up and down icon for crypto and stocks(if we want to use them) */
 /* <i class="fas fa-level-up-alt"></i> on fontawesome */
-.fa-level-up-alt {
+.fa-sort-up {
+    color: #8bfa7a;
+}
+.fa-sort-up:hover {
     color: #8bfa7a;
 }
 /* <i class="fas fa-level-down-alt"></i> on fontawesome */
-.fa-level-down-alt {
+.fa-sort-down {
+    color: #f38066;
+}
+.fa-sort-down:hover {
     color: #f38066;
 }
 
@@ -120,3 +146,7 @@ color: rgb(3, 11, 82);
 border-color:rgb(241, 6, 6)
 }
 
+.added-bloop {
+    opacity: 0;
+    color: #00762b;
+}
