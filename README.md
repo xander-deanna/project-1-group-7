@@ -2,28 +2,27 @@
 
 ### <img src="./Assets/images/tradifylogo.png" alt="tradify Logo" width=20%>
 
-Tradify app is cutting edge investment tool for today's investors.
+_Tradify app is cutting edge investment tool for today's investors._
 
-This app will run in the browser and feature dynamically updated HTML and CSS powered by jquery.
-This app is also using Foundation CDN for styling HTML.
-Users can retrieve current stocks using [Stock API](https://www.alphavantage.co/documentation/) to and we also allow users to search current cryptocurrency prices using [Coinbase API](https://developers.coinbase.com/).
+_Motivated by the recent financial revolution happening in American financial markets we wanted to develop a tool that empowers investors of all types, levels, and interest. With Tradify, savvy investors who want to take advantage of all types of investments, can access our platform to get up to the minute pricing data and insight in three financial markets in one tool, instead of having to use a separate tool for each.
+This app will run in the browser and feature dynamically updated HTML and CSS powered by jquery. This app is also using Foundation CDN for styling HTML. Users can retrieve current stocks using [Stock API](https://www.alphavantage.co/documentation/) to and we also allow users to search current cryptocurrency prices using [Coinbase API](https://developers.coinbase.com/)._
 
 <img src="./Assets/images/TradifyGIFScroll.gif" alt="tradify.io" width=25%>
 
 ## **Project features:**
 
-- Search bar to search stock and cryptocurrency price
-- Stocks and currencies can be saved as favorites for quick reference.
-- Responsive mobile-first UI
-- Randomly render one feature stock and 5 crypto currency prices
+- _Search bar to search stock and cryptocurrency price_
+- _Stocks and currencies can be saved as favorites for quick reference._
+- _Responsive mobile-first UI_
+- _Randomly render one feature stock and 5 crypto currency prices_
 
 ## **Script features:**
 
-- API call (Fetch and AJAX)
-- Event listener (onclick)
-- Object, function, array, for loop and if condition
-- Dynamically create new DOM elements
-- Local storage
+- _API call (Fetch and AJAX)_
+- _Event listener (onclick)_
+- _Object, function, array, for loop and if condition_
+- _Dynamically create new DOM elements_
+- _Local storage_
 
 ## **Project Demo**
 
