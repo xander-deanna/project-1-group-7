@@ -1,20 +1,24 @@
-# **Finance Application**
+### <img src="./Assets/images/tradifylogo.png" alt="tradify Logo" width=25% style="text-align: center">
 
-### <img src="./Assets/images/tradifylogo.png" alt="tradify Logo" width=20%>
+# **Tradify - a financial investment tool**
 
-_Tradify app is cutting edge investment tool for today's investors._
+_Tradify is a cutting edge investment tool for today's investors._
 
-_Motivated by the recent financial revolution happening in American financial markets we wanted to develop a tool that empowers investors of all types, levels, and interest. With Tradify, savvy investors who want to take advantage of all types of investments, can access our platform to get up to the minute pricing data and insight in three financial markets in one tool, instead of having to use a separate tool for each.
-This app will run in the browser and feature dynamically updated HTML and CSS powered by JavaScript. This app is also using Foundation CSS framework for styling HTML. Users can retrieve current stocks using [Stock API](https://www.alphavantage.co/documentation/) to and we also allow users to search current cryptocurrency prices using [Coinbase API](https://developers.coinbase.com/)._
+_Motivated by the recent financial revolution happening in US markets, we wanted to develop a tool that empowers investors of all types, levels, and interest. With Tradify, savvy investors who wantpeer into the world of stocks, cryptocurrency, and foreign exchange markets, can access our platform to get up to the minute pricing data and insight in three financial markets in one tool, instead of having to use a separate tool for each.
+This app will run in the browser and feature dynamically updated HTML and CSS powered by JavaScript, and uses the Foundation CSS framework for styling HTML. Users can retrieve current stocks using [Stock API](https://www.alphavantage.co/documentation/) to and we also allow users to search current cryptocurrency prices using [Coinbase API](https://developers.coinbase.com/)._
 
-<img src="./Assets/images/TradifyGIFScroll.gif" alt="tradify.io" width=25%>
+<img src="./Assets/images/TradifyGIFScroll.gif" alt="Tradify" width=25% style="text-align: center">
+
+<hr>
 
 ## **Project features:**
 
-- _Search bar to search stock and cryptocurrency price_
+- _Search bar to search stock and cryptocurrency prices_
 - _Stocks and currencies can be saved as favorites for quick reference._
 - _Responsive mobile-first UI_
 - _Randomly render one feature stock and 5 crypto currency prices_
+
+<hr>
 
 ## **Script features:**
 
@@ -24,42 +28,51 @@ This app will run in the browser and feature dynamically updated HTML and CSS po
 - _Dynamically create new DOM elements_
 - _Local storage_
 
+<hr>
+
 ## **Project Demo**
 
 _When I open the Tradify app it will randomly render one featured stock price and 5 crypto currency prices_
 _This app will also display favorite stocks and currencies for quick reference._
 
-### <img src="./Assets/images/Display_img_1.PNG" alt="tradify.io" width=70%>
+### <img src="./Assets/images/Display_img_1.PNG" alt="Tradify" width=70%>
 
-_When favorite button is clicked from the navication bar_
-_Modal will be displayed._
-_Then the user can add their favorite stock or cryto currency for quick reference._
+_When the favorite button is clicked from the navigation bar the favorites modal will be displayed._
+_Then the user can add their favorite stock or crytocurrency for quick reference._
 
-### <img src="./Assets/images/tradifyGIFmodal.gif" alt="tradify.io" width=50%>
+### <img src="./Assets/images/tradifyGIFmodal.gif" alt="Tradify" width=50%>
 
 _Favorite stocks and currencies are saved in local storage._
 
-### <img src="./Assets/images/Display_Localstorage_4.PNG" alt="tradify.io" width=60%>
+### <img src="./Assets/images/Display_Localstorage_4.PNG" alt="Tradify" width=60%>
 
-_User also has option to clear favorite stock and cryto_
+_The user also has the option to clear their favorite stocks and cryptocurrencies
 
-### <img src="./Assets/images/Display_Clearfav_5.PNG" alt="tradify.io" width=50%>
+### <img src="./Assets/images/Display_Clearfav_5.PNG" alt="Tradify" width=50%>
 
-_We also allow users to search current stock price and crypto currency_
+_We also allow users to search current stock price and cryptocurrency_
 
-### <img src="./Assets/images/Display_Crytosearch_6.PNG" alt="tradify.io" width=30%>
+### <img src="./Assets/images/Display_Crytosearch_6.PNG" alt="Tradify" width=30%>
+
+<hr>
 
 ## **Link**
 
 https://xander-deanna.github.io/project-1-group-7/index.html
 
+<hr>
+
 ## **Repository**
 
 https://github.com/xander-deanna/project-1-group-7.git
 
+<hr>
+
 ## **Technologies**
 
 _HTML5, Foundation, CSS, Javascript, Fetch API, AlphaVantage API, Coinbase API_
+
+<hr>
 
 ## **Team Members**
 
@@ -67,3 +80,5 @@ _HTML5, Foundation, CSS, Javascript, Fetch API, AlphaVantage API, Coinbase API_
 - _Ivan Zabrodin_
 - _Mark Lloyd_
 - _Kanna Vairavan_
+
+<hr>
