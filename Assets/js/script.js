@@ -124,7 +124,7 @@ async function STKdisplaySearchResults() {
   document.getElementById('stock-results-render-list').innerHTML = ''
 
   let symbol = searchStock['Meta Data']['2. Symbol']
-  let row = document.createElement('ul')
+  let row = document.createElement('li')
 
   let currentDayData = searchStock['Time Series (Daily)'][
       Object.keys(searchStock['Time Series (Daily)'])[0]
