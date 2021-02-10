@@ -124,7 +124,7 @@ async function STKdisplaySearchResults() {
   document.getElementById('stock-results-render-list').innerHTML = ''
 
   let symbol = searchStock['Meta Data']['2. Symbol']
-  let row = document.createElement('ul')
+  let row = document.createElement('li')
 
   let currentDayData = searchStock['Time Series (Daily)'][
       Object.keys(searchStock['Time Series (Daily)'])[0]
@@ -202,9 +202,9 @@ async function STKdisplayFeatured(){
 
   var symbolli=document.createElement("li");
 
-  symbolli.textContent=featured[symbolIndex] + ": " + objValhigh;
+  symbolli.textContent=featured[symbolIndex] + ": " + objValhigh + " ";
   // add icon based on the change in price
-  var iconEl=document.createElement("a");
+  var iconEl=document.createElement("i");
   // change since last day
   if (parseFloat(objValpreviousDayClose) < parseFloat(objValhigh)) {
     iconEl.classList.add("fa", "fa-sort-down");
