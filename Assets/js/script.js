@@ -133,7 +133,7 @@ async function STKdisplaySearchResults() {
       Object.keys(searchStock['Time Series (Daily)'])[1]
   ]
 
-  let price = currentDayData['2. high']
+  let price = parseFloat(currentDayData['2. high']).toFixed(2)
   let changeIcon
 
   // change since last day
@@ -161,10 +161,20 @@ async function STKdisplayFavs() {
   }
   el.innerHTML = ''
   for (let i in favs) {
-    let currentDayData = favs[i]['Time Series (Daily)'][
-      Object.keys(favs[i]['Time Series (Daily)'])[0]
+    let currentDayData = searchStock['Time Series (Daily)'][
+      Object.keys(searchStock['Time Series (Daily)'])[0]
     ]
-    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']}</ul>`
+    let previousDayData = searchStock['Time Series (Daily)'][
+        Object.keys(searchStock['Time Series (Daily)'])[1]
+    ]
+    let changeIcon
+    // change since last day
+    if (parseFloat(previousDayData['4. close']) < parseFloat(currentDayData['2. high'])) {
+        changeIcon = '<i class="fa fa-sort-down"></i>'
+    } else {
+        changeIcon = '<i class="fa fa-sort-up"></i>'
+    }
+    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']} ${changeIcon}</ul>`
   }
   document.getElementById('clearBtnStocks').style.display = "block";
 }
@@ -192,9 +202,9 @@ async function STKdisplayFeatured(){
 
   var symbolli=document.createElement("li");
 
-  symbolli.textContent=featured[symbolIndex] + ": " + objValhigh;
+  symbolli.textContent=featured[symbolIndex] + ": " + objValhigh + " ";
   // add icon based on the change in price
-  var iconEl=document.createElement("a");
+  var iconEl=document.createElement("i");
   // change since last day
   if (parseFloat(objValpreviousDayClose) < parseFloat(objValhigh)) {
     iconEl.classList.add("fa", "fa-sort-down");
