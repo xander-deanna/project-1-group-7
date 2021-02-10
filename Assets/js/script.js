@@ -115,8 +115,8 @@ async function STKdisplaySearchResults() {
   let searchStock = await STKgetData(query)
   if (!searchStock) return $('#schErrorModal').foundation('open')
 
-  document.getElementById('stock-results-render').style.display = 'block'
-  document.getElementById('stock-results-render-list').innerHTML = ''
+  document.getElementById('featuretitleStocks').innerHTML = 'Search Results'
+  document.getElementById('stocksList').innerHTML = ''
 
   let symbol = searchStock['Meta Data']['2. Symbol']
   let row = document.createElement('li')
@@ -138,7 +138,7 @@ async function STKdisplaySearchResults() {
       changeIcon = '<i class="fa fa-sort-up"></i>'
   }
   row.innerHTML = `${symbol.toUpperCase()}: ${price} ${changeIcon}`
-  document.getElementById('stock-results-render-list').appendChild(row)
+  document.getElementById('stocksList').appendChild(row)
 }
 
 async function STKdisplayFavs() {
