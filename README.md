@@ -70,7 +70,7 @@ https://github.com/xander-deanna/project-1-group-7.git
 
 ## **Technologies**
 
-_HTML5, Foundation, CSS, Javascript, Fetch API, AlphaVantage API, Coinbase API_
+_HTML5, Foundation, CSS, Javascript, AlphaVantage API, Coinbase API_
 
 <hr>
 
