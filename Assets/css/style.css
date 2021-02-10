@@ -46,9 +46,10 @@ h4, p, i {
 }
 
 /* favorites icon in the navbar */
-.favMenuBtn {
-    float: right;
+#favsModalBtn {
     margin: 20px 20px 10px 10px;
+}
+.favMenuBtn {
     font-size: large;
 }
 #favsModalBtn:hover {
@@ -126,11 +127,17 @@ li {
 
 /* Up and down icon for crypto and stocks(if we want to use them) */
 /* <i class="fas fa-level-up-alt"></i> on fontawesome */
-.fa-level-up-alt {
+.fa-sort-up {
+    color: #8bfa7a;
+}
+.fa-sort-up:hover {
     color: #8bfa7a;
 }
 /* <i class="fas fa-level-down-alt"></i> on fontawesome */
-.fa-level-down-alt {
+.fa-sort-down {
+    color: #f38066;
+}
+.fa-sort-down:hover {
     color: #f38066;
 }
 
