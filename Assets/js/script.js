@@ -162,7 +162,7 @@ async function STKdisplayFavs() {
     } else {
         changeIcon = '<i class="fa fa-sort-up"></i>'
     }
-    el.innerHTML = el.innerHTML + `<ul>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']} ${changeIcon}</ul>`
+    el.innerHTML = el.innerHTML + `<li>${favs[i]['Meta Data']['2. Symbol']}: ${currentDayData['2. high']} ${changeIcon}</li>`
   }
   document.getElementById('clearBtnStocks').style.display = "block";
 }
